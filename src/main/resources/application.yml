@@ -8,3 +8,7 @@ spring:
     hibernate.ddl-auto: none
     generate-ddl: false
     show-sql: false
+
+
+serviceUrl:
+  authentication: http://localhost:8081
