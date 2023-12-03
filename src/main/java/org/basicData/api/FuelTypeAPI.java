@@ -1,5 +1,6 @@
 package org.basicData.api;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.FuelType;
 import org.basicData.service.GenericService;
@@ -14,15 +15,15 @@ public class FuelTypeAPI {
     private GenericService<FuelType> service;
 
     @PostMapping(path = "/api/fuelType/add")
-    public Long addPerson(@RequestBody FuelType fuelType) {
-        Long userId = CommonUtils.getUserId(null);
+    public Long addPerson(@RequestBody FuelType fuelType, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(fuelType, userId);
         return fuelType.getId();
     }
 
     @PostMapping(path = "/api/fuelType/edit")
-    public Long editPerson(@RequestBody FuelType fuelType) {
-        Long userId = CommonUtils.getUserId(null);
+    public Long editPerson(@RequestBody FuelType fuelType, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(fuelType, userId);
         return fuelType.getId();
     }

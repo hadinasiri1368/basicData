@@ -1,5 +1,6 @@
 package org.basicData.api;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.dto.CarGroupDto;
 import org.basicData.model.CarCapacity;
@@ -16,12 +17,12 @@ public class CarGroupAPI {
     private GenericService<CarGroup> service;
 
     @PostMapping(path = "/api/carGroup/add")
-    public Long addPerson(@RequestBody CarGroupDto carGroupDto) {
-        Long userId = CommonUtils.getUserId(null);
-        CarGroup carGroup =new CarGroup();
+    public Long addPerson(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());
-        CarCapacity carCapacity=new CarCapacity();
+        CarCapacity carCapacity = new CarCapacity();
         carCapacity.setId(carGroupDto.getF_car_capacity_id());
         carGroup.setCarCapacity(carCapacity);
         service.insert(carGroup, userId);
@@ -29,8 +30,8 @@ public class CarGroupAPI {
     }
 
     @PostMapping(path = "/api/carGroup/edit")
-    public Long editPerson(@RequestBody CarGroup carGroup) {
-        Long userId = CommonUtils.getUserId(null);
+    public Long editPerson(@RequestBody CarGroup carGroup, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(carGroup, userId);
         return carGroup.getId();
     }
