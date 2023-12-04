@@ -1,5 +1,6 @@
 package org.basicData.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseEntity;
 import org.basicData.model.CarCapacity;
@@ -7,16 +8,22 @@ import org.basicData.repository.JPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class GenericService<Entity> {
     @Autowired
     private JPA<Entity, Long> genericJPA;
-
-
     public void insert(Entity entity, Long userId) {
+        try {
+            Method m = entity.getClass().getMethod("setId", Long.class);
+            m.invoke(entity, (Long) null);
+        } catch (Exception e) {
+            log.error("setId has error: " + e.getMessage());
+        }
         if (entity instanceof BaseEntity) {
             ((BaseEntity) entity).setInsertedUserId(userId);
             ((BaseEntity) entity).setInsertedDateTime(new Date());

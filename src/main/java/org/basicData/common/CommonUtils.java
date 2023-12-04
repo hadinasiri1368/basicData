@@ -45,10 +45,10 @@ public class CommonUtils {
         return o == null ? true : false;
     }
 
-    public static String checkValidation(String token) {
+    public static String checkValidation(String token, String targetUrl) {
         try {
             String url = ApplicationProperties.getServiceUrlAuthentication() + "/checkValidationToken";
-            url += "?token=" + token;
+            url += "?token=" + token + "&url=" + targetUrl;
             String returnValue = callService(url, HttpMethod.GET, null, null, String.class, null);
             if (returnValue.equals("token is ok"))
                 return null;
