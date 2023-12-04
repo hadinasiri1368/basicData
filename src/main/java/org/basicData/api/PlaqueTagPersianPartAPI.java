@@ -1,5 +1,6 @@
 package org.basicData.api;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.PlaqueTagPersianPart;
 import org.basicData.service.GenericService;
@@ -14,15 +15,15 @@ public class PlaqueTagPersianPartAPI {
     private GenericService<PlaqueTagPersianPart> service;
 
     @PostMapping(path = "/api/plaqueTagPersianPart/add")
-    public Long addPerson(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart) {
-        Long userId = CommonUtils.getUserId(null);
+    public Long addPerson(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(plaqueTagPersianPart, userId);
         return plaqueTagPersianPart.getId();
     }
 
     @PostMapping(path = "/api/plaqueTagPersianPart/edit")
-    public Long editPerson(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart) {
-        Long userId = CommonUtils.getUserId(null);
+    public Long editPerson(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(plaqueTagPersianPart, userId);
         return plaqueTagPersianPart.getId();
     }

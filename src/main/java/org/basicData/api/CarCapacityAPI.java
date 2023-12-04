@@ -1,12 +1,12 @@
 package org.basicData.api;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.CarCapacity;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -15,15 +15,15 @@ public class CarCapacityAPI {
     private GenericService<CarCapacity> service;
 
     @PostMapping(path = "/api/carCapacity/add")
-    public Long addPerson(@RequestBody CarCapacity carCapacity) {
-        Long userId = CommonUtils.getUserId(null);
+    public Long addPerson(@RequestBody CarCapacity carCapacity, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(carCapacity, userId);
         return carCapacity.getId();
     }
 
     @PostMapping(path = "/api/carCapacity/edit")
-    public Long editPerson(@RequestBody CarCapacity carCapacity) {
-        Long userId = CommonUtils.getUserId(null);
+    public Long editPerson(@RequestBody CarCapacity carCapacity, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(carCapacity, userId);
         return carCapacity.getId();
     }
