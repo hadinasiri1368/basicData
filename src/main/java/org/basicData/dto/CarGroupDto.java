@@ -11,6 +11,6 @@ import org.basicData.model.CarCapacity;
 @Setter
 public class CarGroupDto {
     private Long id;
-    private Long f_car_capacity_id;
+    private Long carCapacityId;
     private String name;
 }

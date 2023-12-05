@@ -23,7 +23,7 @@ public class CarGroupAPI {
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());
         CarCapacity carCapacity = new CarCapacity();
-        carCapacity.setId(carGroupDto.getF_car_capacity_id());
+        carCapacity.setId(carGroupDto.getCarCapacityId());
         carGroup.setCarCapacity(carCapacity);
         service.insert(carGroup, userId);
         return carGroup.getId();
