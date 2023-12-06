@@ -15,32 +15,32 @@ public class CarCapacityAPI {
     private GenericService<CarCapacity> service;
 
     @PostMapping(path = "/api/carCapacity/add")
-    public Long addPerson(@RequestBody CarCapacity carCapacity, HttpServletRequest request) {
+    public Long addCarCapacity(@RequestBody CarCapacity carCapacity, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(carCapacity, userId);
         return carCapacity.getId();
     }
 
     @PostMapping(path = "/api/carCapacity/edit")
-    public Long editPerson(@RequestBody CarCapacity carCapacity, HttpServletRequest request) {
+    public Long editCarCapacity(@RequestBody CarCapacity carCapacity, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(carCapacity, userId);
         return carCapacity.getId();
     }
 
     @PostMapping(path = "/api/carCapacity/remove/{id}")
-    public Long removePerson(@PathVariable Long id) {
-        service.delete(new CarCapacity(id, null, null));
+    public Long removeCarCapacity(@PathVariable Long id) {
+        service.delete(id, CarCapacity.class);
         return id;
     }
 
     @GetMapping(path = "/api/carCapacity/{id}")
-    public CarCapacity getPerson(@PathVariable Long id) {
+    public CarCapacity getCarCapacity(@PathVariable Long id) {
         return service.findOne(CarCapacity.class, id);
     }
 
     @GetMapping(path = "/api/carCapacity")
-    public List<CarCapacity> listPerson() {
+    public List<CarCapacity> listCarCapacity() {
         return service.findAll(CarCapacity.class);
     }
 }

@@ -15,32 +15,32 @@ public class DriverLicenseTypeAPI {
     private GenericService<DriverLicenseType> service;
 
     @PostMapping(path = "/api/driverLicenseType/add")
-    public Long addPerson(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) {
+    public Long addDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(driverLicenseType, userId);
         return driverLicenseType.getId();
     }
 
     @PostMapping(path = "/api/driverLicenseType/edit")
-    public Long editPerson(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) {
+    public Long editDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(driverLicenseType, userId);
         return driverLicenseType.getId();
     }
 
     @PostMapping(path = "/api/driverLicenseType/remove/{id}")
-    public Long removePerson(@PathVariable Long id) {
-        service.delete(new DriverLicenseType(id, null));
+    public Long removeDriverLicenseType(@PathVariable Long id) {
+        service.delete(id, DriverLicenseType.class);
         return id;
     }
 
     @GetMapping(path = "/api/driverLicenseType/{id}")
-    public DriverLicenseType getPerson(@PathVariable Long id) {
+    public DriverLicenseType getDriverLicenseType(@PathVariable Long id) {
         return service.findOne(DriverLicenseType.class, id);
     }
 
     @GetMapping(path = "/api/driverLicenseType")
-    public List<DriverLicenseType> listPerson() {
+    public List<DriverLicenseType> listDriverLicenseType() {
         return service.findAll(DriverLicenseType.class);
     }
 }

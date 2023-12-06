@@ -17,7 +17,7 @@ public class CarGroupAPI {
     private GenericService<CarGroup> service;
 
     @PostMapping(path = "/api/carGroup/add")
-    public Long addPerson(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) {
+    public Long addCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
@@ -30,25 +30,25 @@ public class CarGroupAPI {
     }
 
     @PostMapping(path = "/api/carGroup/edit")
-    public Long editPerson(@RequestBody CarGroup carGroup, HttpServletRequest request) {
+    public Long editCarGroup(@RequestBody CarGroup carGroup, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(carGroup, userId);
         return carGroup.getId();
     }
 
     @PostMapping(path = "/api/carGroup/remove/{id}")
-    public Long removePerson(@PathVariable Long id) {
-        service.delete(new CarGroup(id, null, null));
+    public Long removeCarGroup(@PathVariable Long id) {
+        service.delete(id,CarGroup.class);
         return id;
     }
 
     @GetMapping(path = "/api/carGroup/{id}")
-    public CarGroup getPerson(@PathVariable Long id) {
+    public CarGroup getCarGroup(@PathVariable Long id) {
         return service.findOne(CarGroup.class, id);
     }
 
     @GetMapping(path = "/api/carGroup")
-    public List<CarGroup> listPerson() {
+    public List<CarGroup> listCarGroup() {
         return service.findAll(CarGroup.class);
     }
 }

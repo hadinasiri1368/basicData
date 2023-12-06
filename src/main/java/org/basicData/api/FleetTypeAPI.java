@@ -15,32 +15,32 @@ public class FleetTypeAPI {
     private GenericService<FleetType> service;
 
     @PostMapping(path = "/api/fleetType/add")
-    public Long addPerson(@RequestBody FleetType fleetType, HttpServletRequest request) {
+    public Long addFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(fleetType, userId);
         return fleetType.getId();
     }
 
     @PostMapping(path = "/api/fleetType/edit")
-    public Long editPerson(@RequestBody FleetType fleetType, HttpServletRequest request) {
+    public Long editFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(fleetType, userId);
         return fleetType.getId();
     }
 
     @PostMapping(path = "/api/fleetType/remove/{id}")
-    public Long removePerson(@PathVariable Long id) {
-        service.delete(new FleetType(id, null));
+    public Long removeFleetType(@PathVariable Long id) {
+        service.delete(id,FleetType.class);
         return id;
     }
 
     @GetMapping(path = "/api/fleetType/{id}")
-    public FleetType getPerson(@PathVariable Long id) {
+    public FleetType getFleetType(@PathVariable Long id) {
         return service.findOne(FleetType.class, id);
     }
 
     @GetMapping(path = "/api/fleetType")
-    public List<FleetType> listPerson() {
+    public List<FleetType> listFleetType() {
         return service.findAll(FleetType.class);
     }
 }

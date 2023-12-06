@@ -15,32 +15,32 @@ public class PlaqueTagPersianPartAPI {
     private GenericService<PlaqueTagPersianPart> service;
 
     @PostMapping(path = "/api/plaqueTagPersianPart/add")
-    public Long addPerson(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
+    public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(plaqueTagPersianPart, userId);
         return plaqueTagPersianPart.getId();
     }
 
     @PostMapping(path = "/api/plaqueTagPersianPart/edit")
-    public Long editPerson(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
+    public Long editPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(plaqueTagPersianPart, userId);
         return plaqueTagPersianPart.getId();
     }
 
     @PostMapping(path = "/api/plaqueTagPersianPart/remove/{id}")
-    public Long removePerson(@PathVariable Long id) {
-        service.delete(new PlaqueTagPersianPart(id, null));
+    public Long removePlaqueTagPersianPart(@PathVariable Long id) {
+        service.delete(id,PlaqueTagPersianPart.class);
         return id;
     }
 
     @GetMapping(path = "/api/plaqueTagPersianPart/{id}")
-    public PlaqueTagPersianPart getPerson(@PathVariable Long id) {
+    public PlaqueTagPersianPart getPlaqueTagPersianPart(@PathVariable Long id) {
         return service.findOne(PlaqueTagPersianPart.class, id);
     }
 
     @GetMapping(path = "/api/plaqueTagPersianPart")
-    public List<PlaqueTagPersianPart> listPerson() {
+    public List<PlaqueTagPersianPart> listPlaqueTagPersianPart() {
         return service.findAll(PlaqueTagPersianPart.class);
     }
 }
