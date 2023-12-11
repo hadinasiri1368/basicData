@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "driver_license_type" ,schema = "sbd")
+@Table(name = "driver_license_type", schema = "sbd")
 @Entity(name = "driverLicenseType")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DriverLicenseType extends BaseEntity{
+public class DriverLicenseType extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

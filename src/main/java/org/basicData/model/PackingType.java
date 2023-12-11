@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "packing_type" ,schema = "sbd")
+@Table(name = "packing_type", schema = "sbd")
 @Entity(name = "packingType")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PackingType {
+public class PackingType extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-@Table(name = "province_city" ,schema = "sbd")
+
+@Table(name = "province_city", schema = "sbd")
 @Entity(name = "provinceCity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProvinceCity {
+public class ProvinceCity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

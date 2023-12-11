@@ -19,7 +19,7 @@ public class CarGroup extends BaseEntity {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "f_car_capacity_id")
-    private  CarCapacity carCapacity;
+    private CarCapacity carCapacity;
     @Column(columnDefinition = "NVARCHAR(50)")
     private String name;
 }
