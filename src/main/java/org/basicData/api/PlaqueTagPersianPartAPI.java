@@ -30,7 +30,7 @@ public class PlaqueTagPersianPartAPI {
 
     @PostMapping(path = "/api/plaqueTagPersianPart/remove/{id}")
     public Long removePlaqueTagPersianPart(@PathVariable Long id) {
-        service.delete(id,PlaqueTagPersianPart.class);
+        service.delete(id, PlaqueTagPersianPart.class);
         return id;
     }
 

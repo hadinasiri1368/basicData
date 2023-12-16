@@ -16,6 +16,9 @@ public class PlaqueTagPersianPart extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(columnDefinition = "NVARCHAR(3)")
+    private String code;
     @Column(columnDefinition = "NVARCHAR(50)")
     private String name;
+
 }
