@@ -22,10 +22,10 @@ public class BaseInfoGoodAPI {
     }
 
     @PostMapping(path = "/api/baseInfoGood/edit")
-    public Long editBaseInfoGood(@RequestBody BaseInfoGood carCapacity, HttpServletRequest request) {
+    public Long editBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(carCapacity, userId);
-        return carCapacity.getId();
+        service.update(baseInfoGood, userId);
+        return baseInfoGood.getId();
     }
 
     @PostMapping(path = "/api/baseInfoGood/remove/{id}")

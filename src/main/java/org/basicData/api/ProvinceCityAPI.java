@@ -22,10 +22,10 @@ public class ProvinceCityAPI {
     }
 
     @PostMapping(path = "/api/provinceCity/edit")
-    public Long editProvinceCity(@RequestBody ProvinceCity packingType, HttpServletRequest request) {
+    public Long editProvinceCity(@RequestBody ProvinceCity provinceCity, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(packingType, userId);
-        return packingType.getId();
+        service.update(provinceCity, userId);
+        return provinceCity.getId();
     }
 
     @PostMapping(path = "/api/provinceCity/remove/{id}")

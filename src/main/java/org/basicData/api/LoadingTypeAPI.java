@@ -22,10 +22,10 @@ public class LoadingTypeAPI {
     }
 
     @PostMapping(path = "/api/loadingType/edit")
-    public Long editLoadingType(@RequestBody LoadingType packingType, HttpServletRequest request) {
+    public Long editLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(packingType, userId);
-        return packingType.getId();
+        service.update(loadingType, userId);
+        return loadingType.getId();
     }
 
     @PostMapping(path = "/api/loadingType/remove/{id}")
