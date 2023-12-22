@@ -1,0 +1,47 @@
+package org.basicData.api;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.basicData.common.CommonUtils;
+import org.basicData.model.CarProperty;
+import org.basicData.service.GenericService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class CarPropertyAPI {
+    @Autowired
+    private GenericService<CarProperty> service;
+
+    @PostMapping(path = "/api/carProperty/add")
+    public Long addCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        service.insert(carProperty, userId);
+        return carProperty.getId();
+    }
+
+    @PostMapping(path = "/api/carProperty/edit")
+    public Long editCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) {
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        service.update(carProperty, userId);
+        return carProperty.getId();
+    }
+
+    @PostMapping(path = "/api/carProperty/remove/{id}")
+    public Long removeCarProperty(@PathVariable Long id) {
+        service.delete(id, CarProperty.class);
+        return id;
+    }
+
+    @GetMapping(path = "/api/carProperty/{id}")
+    public CarProperty getCarProperty(@PathVariable Long id) {
+        return service.findOne(CarProperty.class, id);
+    }
+
+    @GetMapping(path = "/api/carProperty")
+    public List<CarProperty> listCarProperty() {
+        return service.findAll(CarProperty.class);
+    }
+
+}
