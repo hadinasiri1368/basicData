@@ -21,7 +21,7 @@ public class CountryDivisionAPI {
         return countryDivision.getId();
     }
 
-    @PostMapping(path = "/api/countryDivision`/edit")
+    @PostMapping(path = "/api/countryDivision/edit")
     public Long editCountryDivision(@RequestBody CountryDivision countryDivision, HttpServletRequest request) {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(countryDivision, userId);
