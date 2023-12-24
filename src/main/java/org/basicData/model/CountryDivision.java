@@ -16,8 +16,9 @@ public class CountryDivision extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(columnDefinition = "DECIMAL(18, 0)", name="f_parent_id")
-    private Long parentId;
+    @OneToOne
+    @JoinColumn(name = "f_parent_id")
+    private CountryDivision parent;
     @Column(columnDefinition = "NVARCHAR(50)")
     private String code;
     @Column(columnDefinition = "NVARCHAR(50)")
