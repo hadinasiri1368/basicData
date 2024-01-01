@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: "BASICDATA"
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://;serverName=172.30.23.136;databaseName=way;encrypt=true;trustServerCertificate=true;
@@ -9,7 +11,12 @@ spring:
     generate-ddl: false
     show-sql: false
 server:
-  port: 8082
+  port: 8083
 
 serviceUrl:
   authentication: http://localhost:8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8080/eureka
