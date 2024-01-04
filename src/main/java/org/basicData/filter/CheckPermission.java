@@ -23,7 +23,12 @@ public class CheckPermission extends OncePerRequestFilter implements Filter {
         if (!CommonUtils.isNull(token)) {
             String returnValue = CommonUtils.checkValidation(token, request.getRequestURI());
             if (CommonUtils.isNull(returnValue)) {
-                filterChain.doFilter(request, response);
+                try {
+                    filterChain.doFilter(request, response);
+                } catch (Exception e) {
+                    response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+                    response.getWriter().write(e.getMessage());
+                }
             } else {
                 response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 response.getWriter().write(returnValue);
