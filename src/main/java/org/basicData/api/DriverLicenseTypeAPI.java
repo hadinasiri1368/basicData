@@ -17,16 +17,16 @@ public class DriverLicenseTypeAPI {
     private GenericService<DriverLicenseType> service;
 
     @PostMapping(path = "/api/driverLicenseType/add")
-    public Long addDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) {
+    public Long addDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(driverLicenseType, userId);
         return driverLicenseType.getId();
     }
 
     @PostMapping(path = "/api/driverLicenseType/edit")
-    public Long editDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) {
+    public Long editDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(driverLicenseType, userId);
+        service.update(driverLicenseType, userId , DriverLicenseType.class);
         return driverLicenseType.getId();
     }
 

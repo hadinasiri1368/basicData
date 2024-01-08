@@ -17,16 +17,16 @@ public class CarPropertyAPI {
     private GenericService<CarProperty> service;
 
     @PostMapping(path = "/api/carProperty/add")
-    public Long addCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) {
+    public Long addCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(carProperty, userId);
         return carProperty.getId();
     }
 
     @PostMapping(path = "/api/carProperty/edit")
-    public Long editCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) {
+    public Long editCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(carProperty, userId);
+        service.update(carProperty, userId , CarProperty.class);
         return carProperty.getId();
     }
 

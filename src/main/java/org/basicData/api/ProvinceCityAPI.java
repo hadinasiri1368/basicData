@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class ProvinceCityAPI {
@@ -17,16 +18,16 @@ public class ProvinceCityAPI {
     private GenericService<ProvinceCity> service;
 
     @PostMapping(path = "/api/provinceCity/add")
-    public Long addProvinceCity(@RequestBody ProvinceCity provinceCity, HttpServletRequest request) {
+    public Long addProvinceCity(@RequestBody ProvinceCity provinceCity, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(provinceCity, userId);
         return provinceCity.getId();
     }
 
     @PostMapping(path = "/api/provinceCity/edit")
-    public Long editProvinceCity(@RequestBody ProvinceCity packingType, HttpServletRequest request) {
+    public Long editProvinceCity(@RequestBody ProvinceCity packingType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(packingType, userId);
+        service.update(packingType, userId , ProvinceCity.class);
         return packingType.getId();
     }
 

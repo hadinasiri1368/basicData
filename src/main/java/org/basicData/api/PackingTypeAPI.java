@@ -17,16 +17,16 @@ public class PackingTypeAPI {
     private GenericService<PackingType> service;
 
     @PostMapping(path = "/api/packingType/add")
-    public Long addPackingType(@RequestBody PackingType packingType, HttpServletRequest request) {
+    public Long addPackingType(@RequestBody PackingType packingType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(packingType, userId);
         return packingType.getId();
     }
 
     @PostMapping(path = "/api/packingType/edit")
-    public Long editPackingType(@RequestBody PackingType packingType, HttpServletRequest request) {
+    public Long editPackingType(@RequestBody PackingType packingType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(packingType, userId);
+        service.update(packingType, userId, PackingType.class);
         return packingType.getId();
     }
 

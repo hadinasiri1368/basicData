@@ -17,16 +17,16 @@ public class PlaqueTagPersianPartAPI {
     private GenericService<PlaqueTagPersianPart> service;
 
     @PostMapping(path = "/api/plaqueTagPersianPart/add")
-    public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
+    public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception{
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(plaqueTagPersianPart, userId);
         return plaqueTagPersianPart.getId();
     }
 
     @PostMapping(path = "/api/plaqueTagPersianPart/edit")
-    public Long editPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) {
+    public Long editPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(plaqueTagPersianPart, userId);
+        service.update(plaqueTagPersianPart, userId, PlaqueTagPersianPart.class);
         return plaqueTagPersianPart.getId();
     }
 

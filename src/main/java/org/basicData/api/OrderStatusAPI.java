@@ -17,16 +17,16 @@ public class OrderStatusAPI {
     private GenericService<OrderStatus> service;
 
     @PostMapping(path = "/api/orderStatus/add")
-    public Long addOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) {
+    public Long addOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(orderStatus, userId);
         return orderStatus.getId();
     }
 
     @PostMapping(path = "/api/orderStatus/edit")
-    public Long editOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) {
+    public Long editOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(orderStatus, userId);
+        service.update(orderStatus, userId, OrderStatus.class);
         return orderStatus.getId();
     }
 

@@ -17,22 +17,22 @@ public class FuelTypeAPI {
     private GenericService<FuelType> service;
 
     @PostMapping(path = "/api/fuelType/add")
-    public Long addFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) {
+    public Long addFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(fuelType, userId);
         return fuelType.getId();
     }
 
     @PostMapping(path = "/api/fuelType/edit")
-    public Long editFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) {
+    public Long editFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(fuelType, userId);
+        service.update(fuelType, userId, FuelType.class);
         return fuelType.getId();
     }
 
     @PostMapping(path = "/api/fuelType/remove/{id}")
     public Long removeFuelType(@PathVariable Long id) {
-        service.delete(id,FuelType.class);
+        service.delete(id, FuelType.class);
         return id;
     }
 

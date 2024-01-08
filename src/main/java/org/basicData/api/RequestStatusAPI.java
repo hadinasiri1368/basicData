@@ -14,24 +14,25 @@ import java.util.List;
 @SecurityRequirement(name = "Bearer Authentication")
 public class RequestStatusAPI {
     @Autowired
-    private GenericService <RequestStatus> service;
+    private GenericService<RequestStatus> service;
 
     @PostMapping(path = "/api/requestStatus/add")
-    public Long addRequestStatus (@RequestBody RequestStatus requestStatus , HttpServletRequest request){
+    public Long addRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.insert(requestStatus , userId);
+        service.insert(requestStatus, userId);
         return requestStatus.getId();
     }
+
     @PostMapping(path = "/api/requestStatus/edit")
-    public Long editRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) {
+    public Long editRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(requestStatus, userId);
+        service.update(requestStatus, userId, RequestStatus.class);
         return requestStatus.getId();
     }
 
     @PostMapping(path = "/api/requestStatus/remove/{id}")
     public Long removeRequestStatus(@PathVariable Long id) {
-        service.delete(id,RequestStatus.class);
+        service.delete(id, RequestStatus.class);
         return id;
     }
 

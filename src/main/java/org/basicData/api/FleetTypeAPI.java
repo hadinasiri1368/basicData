@@ -17,22 +17,23 @@ public class FleetTypeAPI {
     private GenericService<FleetType> service;
 
     @PostMapping(path = "/api/fleetType/add")
-    public Long addFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) {
+    public Long addFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(fleetType, userId);
         return fleetType.getId();
     }
 
     @PostMapping(path = "/api/fleetType/edit")
-    public Long editFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) {
+    public Long editFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(fleetType, userId);
-        return fleetType.getId();
+        Long id = fleetType.getId();
+        service.update(fleetType, userId,FleetType.class);
+        return id;
     }
 
     @PostMapping(path = "/api/fleetType/remove/{id}")
     public Long removeFleetType(@PathVariable Long id) {
-        service.delete(id,FleetType.class);
+        service.delete(id, FleetType.class);
         return id;
     }
 

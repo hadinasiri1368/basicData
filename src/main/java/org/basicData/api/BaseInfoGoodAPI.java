@@ -17,17 +17,17 @@ public class BaseInfoGoodAPI {
     private GenericService<BaseInfoGood> service;
 
     @PostMapping(path = "/api/baseInfoGood/add")
-    public Long addBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) {
+    public Long addBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.insert(baseInfoGood, userId);
         return baseInfoGood.getId();
     }
 
     @PostMapping(path = "/api/baseInfoGood/edit")
-    public Long editBaseInfoGood(@RequestBody BaseInfoGood carCapacity, HttpServletRequest request) {
+    public Long editBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(carCapacity, userId);
-        return carCapacity.getId();
+        service.update(baseInfoGood, userId , BaseInfoGood.class);
+        return baseInfoGood.getId();
     }
 
     @PostMapping(path = "/api/baseInfoGood/remove/{id}")

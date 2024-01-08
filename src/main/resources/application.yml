@@ -1,3 +1,5 @@
+server:
+  port: 8085
 spring:
   application:
     name: "BASICDATA"
@@ -10,8 +12,7 @@ spring:
     hibernate.ddl-auto: none
     generate-ddl: false
     show-sql: false
-server:
-  port: 8083
+
 
 serviceUrl:
   authentication: http://localhost:8081
