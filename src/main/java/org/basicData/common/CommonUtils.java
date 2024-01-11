@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,5 +82,19 @@ public class CommonUtils {
             } catch (NumberFormatException e) {
                 return null;
             }
+    }
+
+    public static void setNull(Object entity) throws Exception {
+        Class cls = Class.forName(entity.getClass().getName());
+        Field[] fields = cls.getDeclaredFields();
+        for (Field field : fields) {
+            String name = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1, field.getName().length());
+            Method m = entity.getClass().getMethod("get" + name);
+            Object o = m.invoke(entity);
+            if (CommonUtils.isNull(o)) {
+                Method method = entity.getClass().getMethod("set" + name, field.getType());
+                method.invoke(entity, field.getType().cast(null));
+            }
+        }
     }
 }

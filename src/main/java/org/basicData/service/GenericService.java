@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseEntity;
-import org.basicData.model.CarCapacity;
 import org.basicData.repository.JPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
