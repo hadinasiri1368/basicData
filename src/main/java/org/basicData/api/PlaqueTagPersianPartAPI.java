@@ -23,14 +23,14 @@ public class PlaqueTagPersianPartAPI {
         return plaqueTagPersianPart.getId();
     }
 
-    @PostMapping(path = "/api/plaqueTagPersianPart/edit")
+    @PutMapping(path = "/api/plaqueTagPersianPart/edit")
     public Long editPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(plaqueTagPersianPart, userId, PlaqueTagPersianPart.class);
         return plaqueTagPersianPart.getId();
     }
 
-    @PostMapping(path = "/api/plaqueTagPersianPart/remove/{id}")
+    @DeleteMapping(path = "/api/plaqueTagPersianPart/remove/{id}")
     public Long removePlaqueTagPersianPart(@PathVariable Long id) {
         service.delete(id,PlaqueTagPersianPart.class);
         return id;

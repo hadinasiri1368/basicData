@@ -23,14 +23,14 @@ public class DriverLicenseTypeAPI {
         return driverLicenseType.getId();
     }
 
-    @PostMapping(path = "/api/driverLicenseType/edit")
+    @PutMapping(path = "/api/driverLicenseType/edit")
     public Long editDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(driverLicenseType, userId , DriverLicenseType.class);
         return driverLicenseType.getId();
     }
 
-    @PostMapping(path = "/api/driverLicenseType/remove/{id}")
+    @DeleteMapping(path = "/api/driverLicenseType/remove/{id}")
     public Long removeDriverLicenseType(@PathVariable Long id) {
         service.delete(id, DriverLicenseType.class);
         return id;

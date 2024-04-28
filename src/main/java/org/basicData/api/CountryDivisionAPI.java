@@ -33,7 +33,7 @@ public class CountryDivisionAPI {
         return countryDivision.getId();
     }
 
-    @PostMapping(path = "/api/countryDivision/edit")
+    @PutMapping(path = "/api/countryDivision/edit")
     public Long editCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         CountryDivision countryDivision = new CountryDivision();
@@ -49,7 +49,7 @@ public class CountryDivisionAPI {
         return countryDivision.getId();
     }
 
-    @PostMapping(path = "/api/countryDivision/remove/{id}")
+    @DeleteMapping(path = "/api/countryDivision/remove/{id}")
     public Long removeCountryDivision(@PathVariable Long id) {
         service.delete(id, CountryDivision.class);
         return id;

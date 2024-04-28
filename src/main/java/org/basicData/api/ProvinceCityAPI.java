@@ -24,14 +24,14 @@ public class ProvinceCityAPI {
         return provinceCity.getId();
     }
 
-    @PostMapping(path = "/api/provinceCity/edit")
+    @PutMapping(path = "/api/provinceCity/edit")
     public Long editProvinceCity(@RequestBody ProvinceCity packingType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(packingType, userId , ProvinceCity.class);
         return packingType.getId();
     }
 
-    @PostMapping(path = "/api/provinceCity/remove/{id}")
+    @DeleteMapping(path = "/api/provinceCity/remove/{id}")
     public Long removeProvinceCity(@PathVariable Long id) {
         service.delete(id, ProvinceCity.class);
         return id;

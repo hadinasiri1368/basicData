@@ -23,14 +23,14 @@ public class PackingTypeAPI {
         return packingType.getId();
     }
 
-    @PostMapping(path = "/api/packingType/edit")
+    @PutMapping(path = "/api/packingType/edit")
     public Long editPackingType(@RequestBody PackingType packingType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(packingType, userId, PackingType.class);
         return packingType.getId();
     }
 
-    @PostMapping(path = "/api/packingType/remove/{id}")
+    @DeleteMapping(path = "/api/packingType/remove/{id}")
     public Long removePackingType(@PathVariable Long id) {
         service.delete(id, PackingType.class);
         return id;

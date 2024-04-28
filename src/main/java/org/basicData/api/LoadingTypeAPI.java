@@ -24,14 +24,14 @@ public class LoadingTypeAPI {
         return loadingType.getId();
     }
 
-    @PostMapping(path = "/api/loadingType/edit")
+    @PutMapping(path = "/api/loadingType/edit")
     public Long editLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(loadingType, userId, LoadingType.class);
         return loadingType.getId();
     }
 
-    @PostMapping(path = "/api/loadingType/remove/{id}")
+    @DeleteMapping(path = "/api/loadingType/remove/{id}")
     public Long removeLoadingType(@PathVariable Long id) {
         service.delete(id, LoadingType.class);
         return id;

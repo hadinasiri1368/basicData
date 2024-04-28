@@ -23,14 +23,14 @@ public class FuelTypeAPI {
         return fuelType.getId();
     }
 
-    @PostMapping(path = "/api/fuelType/edit")
+    @PutMapping(path = "/api/fuelType/edit")
     public Long editFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(fuelType, userId, FuelType.class);
         return fuelType.getId();
     }
 
-    @PostMapping(path = "/api/fuelType/remove/{id}")
+    @DeleteMapping(path = "/api/fuelType/remove/{id}")
     public Long removeFuelType(@PathVariable Long id) {
         service.delete(id, FuelType.class);
         return id;

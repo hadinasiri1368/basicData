@@ -23,14 +23,14 @@ public class CarPropertyAPI {
         return carProperty.getId();
     }
 
-    @PostMapping(path = "/api/carProperty/edit")
+    @PutMapping(path = "/api/carProperty/edit")
     public Long editCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(carProperty, userId , CarProperty.class);
         return carProperty.getId();
     }
 
-    @PostMapping(path = "/api/carProperty/remove/{id}")
+    @DeleteMapping(path = "/api/carProperty/remove/{id}")
     public Long removeCarProperty(@PathVariable Long id) {
         service.delete(id, CarProperty.class);
         return id;

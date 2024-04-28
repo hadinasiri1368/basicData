@@ -23,14 +23,14 @@ public class RequestStatusAPI {
         return requestStatus.getId();
     }
 
-    @PostMapping(path = "/api/requestStatus/edit")
+    @PutMapping(path = "/api/requestStatus/edit")
     public Long editRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(requestStatus, userId, RequestStatus.class);
         return requestStatus.getId();
     }
 
-    @PostMapping(path = "/api/requestStatus/remove/{id}")
+    @DeleteMapping(path = "/api/requestStatus/remove/{id}")
     public Long removeRequestStatus(@PathVariable Long id) {
         service.delete(id, RequestStatus.class);
         return id;

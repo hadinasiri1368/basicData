@@ -23,14 +23,14 @@ public class BaseInfoGoodAPI {
         return baseInfoGood.getId();
     }
 
-    @PostMapping(path = "/api/baseInfoGood/edit")
+    @PutMapping(path = "/api/baseInfoGood/edit")
     public Long editBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(baseInfoGood, userId , BaseInfoGood.class);
         return baseInfoGood.getId();
     }
 
-    @PostMapping(path = "/api/baseInfoGood/remove/{id}")
+    @DeleteMapping(path = "/api/baseInfoGood/remove/{id}")
     public Long removeBaseInfoGood(@PathVariable Long id) {
         service.delete(id, BaseInfoGood.class);
         return id;

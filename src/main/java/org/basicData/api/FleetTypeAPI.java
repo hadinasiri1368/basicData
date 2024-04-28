@@ -23,7 +23,7 @@ public class FleetTypeAPI {
         return fleetType.getId();
     }
 
-    @PostMapping(path = "/api/fleetType/edit")
+    @PutMapping(path = "/api/fleetType/edit")
     public Long editFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         Long id = fleetType.getId();
@@ -31,7 +31,7 @@ public class FleetTypeAPI {
         return id;
     }
 
-    @PostMapping(path = "/api/fleetType/remove/{id}")
+    @DeleteMapping(path = "/api/fleetType/remove/{id}")
     public Long removeFleetType(@PathVariable Long id) {
         service.delete(id, FleetType.class);
         return id;

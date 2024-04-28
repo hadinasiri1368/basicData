@@ -23,14 +23,14 @@ public class OrderStatusAPI {
         return orderStatus.getId();
     }
 
-    @PostMapping(path = "/api/orderStatus/edit")
+    @PutMapping(path = "/api/orderStatus/edit")
     public Long editOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) throws Exception {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
         service.update(orderStatus, userId, OrderStatus.class);
         return orderStatus.getId();
     }
 
-    @PostMapping(path = "/api/orderStatus/remove/{id}")
+    @DeleteMapping(path = "/api/orderStatus/remove/{id}")
     public Long removeOrderStatus(@PathVariable Long id) {
         service.delete(id, OrderStatus.class);
         return id;
