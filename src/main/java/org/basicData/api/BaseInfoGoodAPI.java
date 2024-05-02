@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseInfoGood;
+import org.basicData.service.AuthenticationServiceProxy;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +16,19 @@ import java.util.List;
 public class BaseInfoGoodAPI {
     @Autowired
     private GenericService<BaseInfoGood> service;
+    @Autowired
+    private AuthenticationServiceProxy authenticationServiceProxy;
 
     @PostMapping(path = "/api/baseInfoGood/add")
     public Long addBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.insert(baseInfoGood, userId);
         return baseInfoGood.getId();
     }
 
     @PutMapping(path = "/api/baseInfoGood/edit")
     public Long editBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.update(baseInfoGood, userId , BaseInfoGood.class);
         return baseInfoGood.getId();
     }

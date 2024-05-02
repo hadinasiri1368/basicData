@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.RequestStatus;
+import org.basicData.service.AuthenticationServiceProxy;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +16,19 @@ import java.util.List;
 public class RequestStatusAPI {
     @Autowired
     private GenericService<RequestStatus> service;
+    @Autowired
+    private AuthenticationServiceProxy authenticationServiceProxy;
 
     @PostMapping(path = "/api/requestStatus/add")
     public Long addRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.insert(requestStatus, userId);
         return requestStatus.getId();
     }
 
     @PutMapping(path = "/api/requestStatus/edit")
     public Long editRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.update(requestStatus, userId, RequestStatus.class);
         return requestStatus.getId();
     }

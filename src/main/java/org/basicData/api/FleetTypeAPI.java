@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.FleetType;
+import org.basicData.service.AuthenticationServiceProxy;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +16,19 @@ import java.util.List;
 public class FleetTypeAPI {
     @Autowired
     private GenericService<FleetType> service;
+    @Autowired
+    private AuthenticationServiceProxy authenticationServiceProxy;
 
     @PostMapping(path = "/api/fleetType/add")
     public Long addFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.insert(fleetType, userId);
         return fleetType.getId();
     }
 
     @PutMapping(path = "/api/fleetType/edit")
     public Long editFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         Long id = fleetType.getId();
         service.update(fleetType, userId,FleetType.class);
         return id;

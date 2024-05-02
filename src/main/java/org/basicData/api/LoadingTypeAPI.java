@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 
 import org.basicData.model.LoadingType;
+import org.basicData.service.AuthenticationServiceProxy;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +17,19 @@ import java.util.List;
 public class LoadingTypeAPI {
     @Autowired
     private GenericService<LoadingType> service;
+    @Autowired
+    private AuthenticationServiceProxy authenticationServiceProxy;
 
     @PostMapping(path = "/api/loadingType/add")
     public Long addLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.insert(loadingType, userId);
         return loadingType.getId();
     }
 
     @PutMapping(path = "/api/loadingType/edit")
     public Long editLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.update(loadingType, userId, LoadingType.class);
         return loadingType.getId();
     }

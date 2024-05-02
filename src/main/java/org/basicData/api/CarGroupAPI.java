@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.dto.CarGroupDto;
 import org.basicData.model.CarCapacity;
 import org.basicData.model.CarGroup;
+import org.basicData.service.AuthenticationServiceProxy;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,12 @@ import java.util.List;
 public class CarGroupAPI {
     @Autowired
     private GenericService<CarGroup> service;
+    @Autowired
+    private AuthenticationServiceProxy authenticationServiceProxy;
 
     @PostMapping(path = "/api/carGroup/add")
     public Long addCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());
@@ -33,7 +36,7 @@ public class CarGroupAPI {
 
     @PutMapping(path = "/api/carGroup/edit")
     public Long editCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());

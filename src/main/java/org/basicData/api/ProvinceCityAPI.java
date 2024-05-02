@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 
 import org.basicData.model.ProvinceCity;
+import org.basicData.service.AuthenticationServiceProxy;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +17,19 @@ import java.util.List;
 public class ProvinceCityAPI {
     @Autowired
     private GenericService<ProvinceCity> service;
+    @Autowired
+    AuthenticationServiceProxy authenticationServiceProxy;
 
     @PostMapping(path = "/api/provinceCity/add")
     public Long addProvinceCity(@RequestBody ProvinceCity provinceCity, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.insert(provinceCity, userId);
         return provinceCity.getId();
     }
 
     @PutMapping(path = "/api/provinceCity/edit")
     public Long editProvinceCity(@RequestBody ProvinceCity packingType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         service.update(packingType, userId , ProvinceCity.class);
         return packingType.getId();
     }

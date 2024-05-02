@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.dto.CountryDivisionDto;
 import org.basicData.model.CountryDivision;
+import org.basicData.service.AuthenticationServiceProxy;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,12 @@ import java.util.List;
 public class CountryDivisionAPI {
     @Autowired
     private GenericService<CountryDivision> service;
+    @Autowired
+    private AuthenticationServiceProxy authenticationServiceProxy;
 
     @PostMapping(path = "/api/countryDivision/add")
     public Long addCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         CountryDivision countryDivision = new CountryDivision();
         countryDivision.setId(countryDivisionDto.getId());
         CountryDivision countryDivisionParent = new CountryDivision();
@@ -35,7 +38,7 @@ public class CountryDivisionAPI {
 
     @PutMapping(path = "/api/countryDivision/edit")
     public Long editCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        Long userId = CommonUtils.longValue(authenticationServiceProxy.getUser(CommonUtils.getToken(request)));
         CountryDivision countryDivision = new CountryDivision();
         countryDivision.setId(countryDivisionDto.getId());
         CountryDivision countryDivisionParent = new CountryDivision();
