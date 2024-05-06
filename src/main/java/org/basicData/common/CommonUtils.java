@@ -1,11 +1,18 @@
 package org.basicData.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
+import org.basicData.dto.ExceptionDto;
+import org.basicData.service.AuthenticationServiceProxy;
+import org.hibernate.annotations.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Field;
@@ -14,18 +21,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
 public class CommonUtils {
-    public static Long getUserId(String token) {
-        try {
-            String url = ApplicationProperties.getServiceUrlAuthentication() + "/getUserId";
-            url += "?token=" + token;
-            return callService(url, HttpMethod.GET, null, null, Long.class, null);
-        } catch (Exception e) {
-            log.error("checkValidation error: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    }
+    @Autowired
+    private static AuthenticationServiceProxy authenticationServiceProxy;
+    @Autowired
+    private static MessageSource messageSource;
 
     public static String getToken(HttpServletRequest request) {
         if (CommonUtils.isNull(request.getHeader("Authorization")))
@@ -45,21 +46,6 @@ public class CommonUtils {
             return false;
         }
         return o == null ? true : false;
-    }
-
-    public static String checkValidation(String token, String targetUrl) {
-        try {
-            String url = ApplicationProperties.getServiceUrlAuthentication() + "/checkValidationToken";
-            url += "?token=" + token + "&url=" + targetUrl;
-            String returnValue = callService(url, HttpMethod.GET, null, null, String.class, null);
-            if (returnValue.equals("token is ok"))
-                return null;
-            return returnValue;
-        } catch (Exception e) {
-            log.error("checkValidation error: " + e.getMessage());
-            e.printStackTrace();
-            return e.getMessage();
-        }
     }
 
     public static <T> T callService(String url, HttpMethod httpMethod, HttpHeaders headers, Object body, Class<T> aClass, Map<String, Object> params) throws Exception {
@@ -96,5 +82,26 @@ public class CommonUtils {
                 method.invoke(entity, field.getType().cast(null));
             }
         }
+    }
+
+    public static ExceptionDto getException(Exception exception) {
+        try {
+            String[] messageArray = exception.getMessage().split("]:");
+            ObjectMapper objectMapper = new ObjectMapper();
+            if (messageArray.length > 1) {
+                return objectMapper.readValue(messageArray[1].replaceAll("\\[", ""), ExceptionDto.class);
+            } else {
+                return objectMapper.readValue(messageArray[0].replaceAll("\\[", ""), ExceptionDto.class);
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public static Long getUserId(String token, String uuid) {
+        return longValue(authenticationServiceProxy.getUserId(token, uuid));
+    }
+
+    public static String getMessage(String key) {
+        return messageSource.getMessage(key, null, null);
     }
 }

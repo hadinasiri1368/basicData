@@ -18,14 +18,16 @@ public class PackingTypeAPI {
 
     @PostMapping(path = "/api/packingType/add")
     public Long addPackingType(@RequestBody PackingType packingType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.insert(packingType, userId);
         return packingType.getId();
     }
 
     @PutMapping(path = "/api/packingType/edit")
     public Long editPackingType(@RequestBody PackingType packingType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.update(packingType, userId, PackingType.class);
         return packingType.getId();
     }

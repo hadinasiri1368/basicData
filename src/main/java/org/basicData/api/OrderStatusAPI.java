@@ -18,14 +18,16 @@ public class OrderStatusAPI {
 
     @PostMapping(path = "/api/orderStatus/add")
     public Long addOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.insert(orderStatus, userId);
         return orderStatus.getId();
     }
 
     @PutMapping(path = "/api/orderStatus/edit")
     public Long editOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.update(orderStatus, userId, OrderStatus.class);
         return orderStatus.getId();
     }

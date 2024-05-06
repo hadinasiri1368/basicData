@@ -18,14 +18,16 @@ public class PlaqueTagPersianPartAPI {
 
     @PostMapping(path = "/api/plaqueTagPersianPart/add")
     public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception{
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.insert(plaqueTagPersianPart, userId);
         return plaqueTagPersianPart.getId();
     }
 
     @PutMapping(path = "/api/plaqueTagPersianPart/edit")
     public Long editPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.update(plaqueTagPersianPart, userId, PlaqueTagPersianPart.class);
         return plaqueTagPersianPart.getId();
     }

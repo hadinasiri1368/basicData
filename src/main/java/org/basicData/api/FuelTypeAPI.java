@@ -18,14 +18,16 @@ public class FuelTypeAPI {
 
     @PostMapping(path = "/api/fuelType/add")
     public Long addFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.insert(fuelType, userId);
         return fuelType.getId();
     }
 
     @PutMapping(path = "/api/fuelType/edit")
     public Long editFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.update(fuelType, userId, FuelType.class);
         return fuelType.getId();
     }

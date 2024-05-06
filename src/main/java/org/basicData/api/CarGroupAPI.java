@@ -20,7 +20,8 @@ public class CarGroupAPI {
 
     @PostMapping(path = "/api/carGroup/add")
     public Long addCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());
@@ -33,7 +34,8 @@ public class CarGroupAPI {
 
     @PutMapping(path = "/api/carGroup/edit")
     public Long editCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());

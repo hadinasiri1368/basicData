@@ -18,14 +18,16 @@ public class DriverLicenseTypeAPI {
 
     @PostMapping(path = "/api/driverLicenseType/add")
     public Long addDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.insert(driverLicenseType, userId);
         return driverLicenseType.getId();
     }
 
     @PutMapping(path = "/api/driverLicenseType/edit")
     public Long editDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.update(driverLicenseType, userId , DriverLicenseType.class);
         return driverLicenseType.getId();
     }

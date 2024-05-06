@@ -18,14 +18,16 @@ public class FleetTypeAPI {
 
     @PostMapping(path = "/api/fleetType/add")
     public Long addFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.insert(fleetType, userId);
         return fleetType.getId();
     }
 
     @PutMapping(path = "/api/fleetType/edit")
     public Long editFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         Long id = fleetType.getId();
         service.update(fleetType, userId,FleetType.class);
         return id;

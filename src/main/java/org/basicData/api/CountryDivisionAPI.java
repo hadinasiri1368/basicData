@@ -19,7 +19,8 @@ public class CountryDivisionAPI {
 
     @PostMapping(path = "/api/countryDivision/add")
     public Long addCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         CountryDivision countryDivision = new CountryDivision();
         countryDivision.setId(countryDivisionDto.getId());
         CountryDivision countryDivisionParent = new CountryDivision();
@@ -35,7 +36,8 @@ public class CountryDivisionAPI {
 
     @PutMapping(path = "/api/countryDivision/edit")
     public Long editCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         CountryDivision countryDivision = new CountryDivision();
         countryDivision.setId(countryDivisionDto.getId());
         CountryDivision countryDivisionParent = new CountryDivision();

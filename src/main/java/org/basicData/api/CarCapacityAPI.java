@@ -18,15 +18,17 @@ public class CarCapacityAPI {
 
     @PostMapping(path = "/api/carCapacity/add")
     public Long addCarCapacity(@RequestBody CarCapacity carCapacity, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.insert(carCapacity, userId);
         return carCapacity.getId();
     }
 
     @PutMapping(path = "/api/carCapacity/edit")
     public Long editCarCapacity(@RequestBody CarCapacity carCapacity, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
-        service.update(carCapacity, userId , CarCapacity.class);
+        String uuid = request.getHeader("X-UUID");
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
+        service.update(carCapacity, userId, CarCapacity.class);
         return carCapacity.getId();
     }
 

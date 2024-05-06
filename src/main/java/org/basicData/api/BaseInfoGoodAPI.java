@@ -18,14 +18,16 @@ public class BaseInfoGoodAPI {
 
     @PostMapping(path = "/api/baseInfoGood/add")
     public Long addBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.insert(baseInfoGood, userId);
         return baseInfoGood.getId();
     }
 
     @PutMapping(path = "/api/baseInfoGood/edit")
     public Long editBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
-        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request));
+        String uuid = request.getHeader("X-UUID");
+Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         service.update(baseInfoGood, userId , BaseInfoGood.class);
         return baseInfoGood.getId();
     }
