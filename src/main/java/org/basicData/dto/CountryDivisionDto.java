@@ -1,12 +1,10 @@
 package org.basicData.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.basicData.model.CountryDivision;
+
 
 @AllArgsConstructor
 @Getter

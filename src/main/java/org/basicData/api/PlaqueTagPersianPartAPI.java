@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.PlaqueTagPersianPart;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class PlaqueTagPersianPartAPI {
     }
 
     @GetMapping(path = "/api/plaqueTagPersianPart")
-    public List<PlaqueTagPersianPart> listPlaqueTagPersianPart() {
-        return service.findAll(PlaqueTagPersianPart.class);
+    public Page<PlaqueTagPersianPart> listPlaqueTagPersianPart(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(PlaqueTagPersianPart.class,page,size);
     }
 }

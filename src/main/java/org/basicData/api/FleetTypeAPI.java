@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.FleetType;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class FleetTypeAPI {
     }
 
     @GetMapping(path = "/api/fleetType")
-    public List<FleetType> listFleetType() {
-        return service.findAll(FleetType.class);
+    public Page<FleetType> listFleetType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(FleetType.class,page,size);
     }
 }

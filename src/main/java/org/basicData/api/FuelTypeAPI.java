@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.FuelType;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class FuelTypeAPI {
     }
 
     @GetMapping(path = "/api/fuelType")
-    public List<FuelType> listFuelType() {
-        return service.findAll(FuelType.class);
+    public Page<FuelType> listFuelType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(FuelType.class,page,size);
     }
 }

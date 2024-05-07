@@ -8,6 +8,7 @@ import org.basicData.model.CarCapacity;
 import org.basicData.model.CarGroup;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class CarGroupAPI {
     }
 
     @GetMapping(path = "/api/carGroup")
-    public List<CarGroup> listCarGroup() {
-        return service.findAll(CarGroup.class);
+    public Page<CarGroup> listCarGroup(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(CarGroup.class,page, size);
     }
 }

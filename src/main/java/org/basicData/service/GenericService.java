@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseEntity;
 import org.basicData.repository.JPA;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class GenericService<Entity> {
     private JPA<Entity, Long> genericJPA;
     @Autowired
     private EntityManager entityManager;
+
+    @Value("${PageRequest.page}")
+    private Integer page;
+    @Value("${PageRequest.size}")
+    private Integer size;
 
     @Transactional
     public void insert(Entity entity, Long userId) throws Exception {
@@ -69,11 +75,12 @@ public class GenericService<Entity> {
     }
 
     public Page<Entity> findAll(Class<Entity> aClass, Integer page, Integer size) {
-        if (!CommonUtils.isNull(page) && !CommonUtils.isNull(size)) {
-            PageRequest pageRequest = PageRequest.of(page, size);
-            return genericJPA.findAllWithPaging(aClass, pageRequest);
+        if (CommonUtils.isNull(page) && CommonUtils.isNull(size)) {
+            return genericJPA.findAllWithPaging(aClass);
         }
-        return genericJPA.findAllWithPaging(aClass);
+        PageRequest pageRequest = PageRequest.of(CommonUtils.isNull(page, this.page), CommonUtils.isNull(size, this.size));
+        return genericJPA.findAllWithPaging(aClass, pageRequest);
+
     }
 
 }

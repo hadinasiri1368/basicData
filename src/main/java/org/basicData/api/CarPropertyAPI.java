@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.CarProperty;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,8 +45,8 @@ public class CarPropertyAPI {
     }
 
     @GetMapping(path = "/api/carProperty")
-    public List<CarProperty> listCarProperty() {
-        return service.findAll(CarProperty.class);
+    public Page<CarProperty> listCarProperty(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(CarProperty.class,page,size);
     }
 
 }

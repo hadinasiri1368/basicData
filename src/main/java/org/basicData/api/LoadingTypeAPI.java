@@ -7,6 +7,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.LoadingType;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,8 +46,8 @@ public class LoadingTypeAPI {
     }
 
     @GetMapping(path = "/api/loadingType")
-    public List<LoadingType> listLoadingType() {
-        return service.findAll(LoadingType.class);
+    public Page<LoadingType> listLoadingType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(LoadingType.class,page,size);
     }
 
 }

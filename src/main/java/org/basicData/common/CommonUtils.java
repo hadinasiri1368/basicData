@@ -104,4 +104,8 @@ public class CommonUtils {
     public static String getMessage(String key) {
         return messageSource.getMessage(key, null, null);
     }
+
+    public static <E> E isNull(E expr1, E expr2) {
+        return (!isNull(expr1)) ? expr1 : expr2;
+    }
 }

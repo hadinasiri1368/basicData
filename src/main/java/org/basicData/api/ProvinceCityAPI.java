@@ -7,6 +7,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.ProvinceCity;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,8 +46,8 @@ public class ProvinceCityAPI {
     }
 
     @GetMapping(path = "/api/provinceCity")
-    public List<ProvinceCity> listProvinceCity() {
-        return service.findAll(ProvinceCity.class);
+    public Page<ProvinceCity> listProvinceCity(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(ProvinceCity.class,page,size);
     }
 
 }

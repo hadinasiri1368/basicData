@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.OrderStatus;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,8 +45,8 @@ public class OrderStatusAPI {
     }
 
     @GetMapping(path = "/api/orderStatus")
-    public List<OrderStatus> listOrderStatus() {
-        return service.findAll(OrderStatus.class);
+    public Page<OrderStatus> listOrderStatus(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(OrderStatus.class,page,size);
     }
 
 }

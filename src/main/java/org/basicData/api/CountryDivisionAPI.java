@@ -7,6 +7,7 @@ import org.basicData.dto.CountryDivisionDto;
 import org.basicData.model.CountryDivision;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,8 +64,8 @@ public class CountryDivisionAPI {
     }
 
     @GetMapping(path = "/api/countryDivision")
-    public List<CountryDivision> listCountryDivision() {
-        return service.findAll(CountryDivision.class);
+    public Page<CountryDivision> listCountryDivision(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(CountryDivision.class,page,size);
     }
 
 }
