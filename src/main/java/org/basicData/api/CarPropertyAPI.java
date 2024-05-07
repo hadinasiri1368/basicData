@@ -19,7 +19,7 @@ public class CarPropertyAPI {
     @PostMapping(path = "/api/carProperty/add")
     public Long addCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.insert(carProperty, userId);
         return carProperty.getId();
     }
@@ -27,8 +27,8 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/carProperty/edit")
     public Long editCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
-        service.update(carProperty, userId , CarProperty.class);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
+        service.update(carProperty, userId, CarProperty.class);
         return carProperty.getId();
     }
 

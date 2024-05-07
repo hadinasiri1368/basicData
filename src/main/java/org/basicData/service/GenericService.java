@@ -6,6 +6,8 @@ import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseEntity;
 import org.basicData.repository.JPA;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,6 +66,14 @@ public class GenericService<Entity> {
 
     public List<Entity> findAll(Class<Entity> aClass) {
         return genericJPA.findAll(aClass);
+    }
+
+    public Page<Entity> findAll(Class<Entity> aClass, Integer page, Integer size) {
+        if (!CommonUtils.isNull(page) && !CommonUtils.isNull(size)) {
+            PageRequest pageRequest = PageRequest.of(page, size);
+            return genericJPA.findAllWithPaging(aClass, pageRequest);
+        }
+        return genericJPA.findAllWithPaging(aClass);
     }
 
 }

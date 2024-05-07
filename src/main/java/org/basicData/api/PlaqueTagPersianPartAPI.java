@@ -17,9 +17,9 @@ public class PlaqueTagPersianPartAPI {
     private GenericService<PlaqueTagPersianPart> service;
 
     @PostMapping(path = "/api/plaqueTagPersianPart/add")
-    public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception{
+    public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.insert(plaqueTagPersianPart, userId);
         return plaqueTagPersianPart.getId();
     }
@@ -27,14 +27,14 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/plaqueTagPersianPart/edit")
     public Long editPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.update(plaqueTagPersianPart, userId, PlaqueTagPersianPart.class);
         return plaqueTagPersianPart.getId();
     }
 
     @DeleteMapping(path = "/api/plaqueTagPersianPart/remove/{id}")
     public Long removePlaqueTagPersianPart(@PathVariable Long id) {
-        service.delete(id,PlaqueTagPersianPart.class);
+        service.delete(id, PlaqueTagPersianPart.class);
         return id;
     }
 

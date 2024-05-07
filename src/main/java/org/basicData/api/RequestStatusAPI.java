@@ -19,7 +19,7 @@ public class RequestStatusAPI {
     @PostMapping(path = "/api/requestStatus/add")
     public Long addRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.insert(requestStatus, userId);
         return requestStatus.getId();
     }
@@ -27,7 +27,7 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/requestStatus/edit")
     public Long editRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.update(requestStatus, userId, RequestStatus.class);
         return requestStatus.getId();
     }

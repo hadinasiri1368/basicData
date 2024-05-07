@@ -20,7 +20,7 @@ public class ProvinceCityAPI {
     @PostMapping(path = "/api/provinceCity/add")
     public Long addProvinceCity(@RequestBody ProvinceCity provinceCity, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.insert(provinceCity, userId);
         return provinceCity.getId();
     }
@@ -28,8 +28,8 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/provinceCity/edit")
     public Long editProvinceCity(@RequestBody ProvinceCity packingType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
-        service.update(packingType, userId , ProvinceCity.class);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
+        service.update(packingType, userId, ProvinceCity.class);
         return packingType.getId();
     }
 

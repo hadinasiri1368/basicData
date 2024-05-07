@@ -20,7 +20,7 @@ public class LoadingTypeAPI {
     @PostMapping(path = "/api/loadingType/add")
     public Long addLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.insert(loadingType, userId);
         return loadingType.getId();
     }
@@ -28,7 +28,7 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/loadingType/edit")
     public Long editLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.update(loadingType, userId, LoadingType.class);
         return loadingType.getId();
     }

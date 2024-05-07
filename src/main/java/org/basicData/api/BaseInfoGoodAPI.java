@@ -1,11 +1,14 @@
 package org.basicData.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseInfoGood;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +22,7 @@ public class BaseInfoGoodAPI {
     @PostMapping(path = "/api/baseInfoGood/add")
     public Long addBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         service.insert(baseInfoGood, userId);
         return baseInfoGood.getId();
     }
@@ -27,8 +30,8 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/baseInfoGood/edit")
     public Long editBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
-        service.update(baseInfoGood, userId , BaseInfoGood.class);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
+        service.update(baseInfoGood, userId, BaseInfoGood.class);
         return baseInfoGood.getId();
     }
 
@@ -44,8 +47,8 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     }
 
     @GetMapping(path = "/api/baseInfoGood")
-    public List<BaseInfoGood> listBaseInfoGood() {
-        return service.findAll(BaseInfoGood.class);
+    public Page<BaseInfoGood> listBaseInfoGood(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+        return service.findAll(BaseInfoGood.class, page, size);
     }
 
 }

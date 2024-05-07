@@ -21,7 +21,7 @@ public class CarGroupAPI {
     @PostMapping(path = "/api/carGroup/add")
     public Long addCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());
@@ -35,14 +35,14 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/carGroup/edit")
     public Long editCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
         carGroup.setName(carGroupDto.getName());
         CarCapacity carCapacity = new CarCapacity();
         carCapacity.setId(carGroupDto.getCarCapacityId());
         carGroup.setCarCapacity(carCapacity);
-        service.update(carGroup, userId , CarGroup.class);
+        service.update(carGroup, userId, CarGroup.class);
         return carGroup.getId();
     }
 

@@ -20,7 +20,7 @@ public class CountryDivisionAPI {
     @PostMapping(path = "/api/countryDivision/add")
     public Long addCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         CountryDivision countryDivision = new CountryDivision();
         countryDivision.setId(countryDivisionDto.getId());
         CountryDivision countryDivisionParent = new CountryDivision();
@@ -37,7 +37,7 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
     @PutMapping(path = "/api/countryDivision/edit")
     public Long editCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
-Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
+        Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         CountryDivision countryDivision = new CountryDivision();
         countryDivision.setId(countryDivisionDto.getId());
         CountryDivision countryDivisionParent = new CountryDivision();
@@ -47,7 +47,7 @@ Long userId = CommonUtils.getUserId(CommonUtils.getToken(request),uuid);
         countryDivision.setName(countryDivisionDto.getName());
         countryDivision.setIsFreeZone(countryDivisionDto.getIsFreeZone());
         countryDivision.setLevelToRoot(countryDivisionDto.getLevelToRoot());
-        service.update(countryDivision, userId , CountryDivision.class);
+        service.update(countryDivision, userId, CountryDivision.class);
         return countryDivision.getId();
     }
 
