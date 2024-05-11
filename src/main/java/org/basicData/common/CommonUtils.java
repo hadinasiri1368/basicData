@@ -23,10 +23,18 @@ import java.util.Map;
 @Slf4j
 @Component
 public class CommonUtils {
-    @Autowired
     private static AuthenticationServiceProxy authenticationServiceProxy;
-    @Autowired
     private static MessageSource messageSource;
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        CommonUtils.messageSource = messageSource;
+    }
+
+    @Autowired
+    public void setAuthenticationServiceProxy(AuthenticationServiceProxy authenticationServiceProxy) {
+        CommonUtils.authenticationServiceProxy = authenticationServiceProxy;
+    }
 
     public static String getToken(HttpServletRequest request) {
         if (CommonUtils.isNull(request.getHeader("Authorization")))
