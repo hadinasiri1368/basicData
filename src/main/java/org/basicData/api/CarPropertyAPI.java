@@ -17,7 +17,7 @@ public class CarPropertyAPI {
     @Autowired
     private GenericService<CarProperty> service;
 
-    @PostMapping(path = "/api/carProperty/add")
+    @PostMapping(path = "/basicData/carProperty/add")
     public Long addCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -25,7 +25,7 @@ public class CarPropertyAPI {
         return carProperty.getId();
     }
 
-    @PutMapping(path = "/api/carProperty/edit")
+    @PutMapping(path = "/basicData/carProperty/edit")
     public Long editCarProperty(@RequestBody CarProperty carProperty, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -33,18 +33,18 @@ public class CarPropertyAPI {
         return carProperty.getId();
     }
 
-    @DeleteMapping(path = "/api/carProperty/remove/{id}")
+    @DeleteMapping(path = "/basicData/carProperty/remove/{id}")
     public Long removeCarProperty(@PathVariable Long id) {
         service.delete(id, CarProperty.class);
         return id;
     }
 
-    @GetMapping(path = "/api/carProperty/{id}")
+    @GetMapping(path = "/basicData/carProperty/{id}")
     public CarProperty getCarProperty(@PathVariable Long id) {
         return service.findOne(CarProperty.class, id);
     }
 
-    @GetMapping(path = "/api/carProperty")
+    @GetMapping(path = "/basicData/carProperty")
     public Page<CarProperty> listCarProperty(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(CarProperty.class,page,size);
     }

@@ -17,7 +17,7 @@ public class FleetTypeAPI {
     @Autowired
     private GenericService<FleetType> service;
 
-    @PostMapping(path = "/api/fleetType/add")
+    @PostMapping(path = "/basicData/fleetType/add")
     public Long addFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -25,7 +25,7 @@ public class FleetTypeAPI {
         return fleetType.getId();
     }
 
-    @PutMapping(path = "/api/fleetType/edit")
+    @PutMapping(path = "/basicData/fleetType/edit")
     public Long editFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -34,18 +34,18 @@ public class FleetTypeAPI {
         return id;
     }
 
-    @DeleteMapping(path = "/api/fleetType/remove/{id}")
+    @DeleteMapping(path = "/basicData/fleetType/remove/{id}")
     public Long removeFleetType(@PathVariable Long id) {
         service.delete(id, FleetType.class);
         return id;
     }
 
-    @GetMapping(path = "/api/fleetType/{id}")
+    @GetMapping(path = "/basicData/fleetType/{id}")
     public FleetType getFleetType(@PathVariable Long id) {
         return service.findOne(FleetType.class, id);
     }
 
-    @GetMapping(path = "/api/fleetType")
+    @GetMapping(path = "/basicData/fleetType")
     public Page<FleetType> listFleetType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(FleetType.class,page,size);
     }

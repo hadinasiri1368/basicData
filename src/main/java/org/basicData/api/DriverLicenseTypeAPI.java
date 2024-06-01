@@ -17,7 +17,7 @@ public class DriverLicenseTypeAPI {
     @Autowired
     private GenericService<DriverLicenseType> service;
 
-    @PostMapping(path = "/api/driverLicenseType/add")
+    @PostMapping(path = "/basicData/driverLicenseType/add")
     public Long addDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -25,7 +25,7 @@ public class DriverLicenseTypeAPI {
         return driverLicenseType.getId();
     }
 
-    @PutMapping(path = "/api/driverLicenseType/edit")
+    @PutMapping(path = "/basicData/driverLicenseType/edit")
     public Long editDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -33,18 +33,18 @@ public class DriverLicenseTypeAPI {
         return driverLicenseType.getId();
     }
 
-    @DeleteMapping(path = "/api/driverLicenseType/remove/{id}")
+    @DeleteMapping(path = "/basicData/driverLicenseType/remove/{id}")
     public Long removeDriverLicenseType(@PathVariable Long id) {
         service.delete(id, DriverLicenseType.class);
         return id;
     }
 
-    @GetMapping(path = "/api/driverLicenseType/{id}")
+    @GetMapping(path = "/basicData/driverLicenseType/{id}")
     public DriverLicenseType getDriverLicenseType(@PathVariable Long id) {
         return service.findOne(DriverLicenseType.class, id);
     }
 
-    @GetMapping(path = "/api/driverLicenseType")
+    @GetMapping(path = "/basicData/driverLicenseType")
     public Page<DriverLicenseType> listDriverLicenseType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(DriverLicenseType.class,page,size);
     }

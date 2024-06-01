@@ -18,7 +18,7 @@ public class CountryDivisionAPI {
     @Autowired
     private GenericService<CountryDivision> service;
 
-    @PostMapping(path = "/api/countryDivision/add")
+    @PostMapping(path = "/basicData/countryDivision/add")
     public Long addCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -35,7 +35,7 @@ public class CountryDivisionAPI {
         return countryDivision.getId();
     }
 
-    @PutMapping(path = "/api/countryDivision/edit")
+    @PutMapping(path = "/basicData/countryDivision/edit")
     public Long editCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -52,18 +52,18 @@ public class CountryDivisionAPI {
         return countryDivision.getId();
     }
 
-    @DeleteMapping(path = "/api/countryDivision/remove/{id}")
+    @DeleteMapping(path = "/basicData/countryDivision/remove/{id}")
     public Long removeCountryDivision(@PathVariable Long id) {
         service.delete(id, CountryDivision.class);
         return id;
     }
 
-    @GetMapping(path = "/api/countryDivision/{id}")
+    @GetMapping(path = "/basicData/countryDivision/{id}")
     public CountryDivision getCountryDivision(@PathVariable Long id) {
         return service.findOne(CountryDivision.class, id);
     }
 
-    @GetMapping(path = "/api/countryDivision")
+    @GetMapping(path = "/basicData/countryDivision")
     public Page<CountryDivision> listCountryDivision(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(CountryDivision.class,page,size);
     }

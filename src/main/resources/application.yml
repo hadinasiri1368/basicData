@@ -22,3 +22,11 @@ eureka:
 PageRequest :
   page : 0
   size : 10
+
+springdoc:
+  swagger-ui:
+    path: index.html
+    enabled: true
+    config-url: /basicDataSwagger/v3/api-docs/swagger-config
+    disable-swagger-default-url: true
+    url: /basicDataSwagger/v3/api-docs

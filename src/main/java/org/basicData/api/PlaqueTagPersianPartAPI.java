@@ -17,7 +17,7 @@ public class PlaqueTagPersianPartAPI {
     @Autowired
     private GenericService<PlaqueTagPersianPart> service;
 
-    @PostMapping(path = "/api/plaqueTagPersianPart/add")
+    @PostMapping(path = "/basicData/plaqueTagPersianPart/add")
     public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -25,7 +25,7 @@ public class PlaqueTagPersianPartAPI {
         return plaqueTagPersianPart.getId();
     }
 
-    @PutMapping(path = "/api/plaqueTagPersianPart/edit")
+    @PutMapping(path = "/basicData/plaqueTagPersianPart/edit")
     public Long editPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -33,18 +33,18 @@ public class PlaqueTagPersianPartAPI {
         return plaqueTagPersianPart.getId();
     }
 
-    @DeleteMapping(path = "/api/plaqueTagPersianPart/remove/{id}")
+    @DeleteMapping(path = "/basicData/plaqueTagPersianPart/remove/{id}")
     public Long removePlaqueTagPersianPart(@PathVariable Long id) {
         service.delete(id, PlaqueTagPersianPart.class);
         return id;
     }
 
-    @GetMapping(path = "/api/plaqueTagPersianPart/{id}")
+    @GetMapping(path = "/basicData/plaqueTagPersianPart/{id}")
     public PlaqueTagPersianPart getPlaqueTagPersianPart(@PathVariable Long id) {
         return service.findOne(PlaqueTagPersianPart.class, id);
     }
 
-    @GetMapping(path = "/api/plaqueTagPersianPart")
+    @GetMapping(path = "/basicData/plaqueTagPersianPart")
     public Page<PlaqueTagPersianPart> listPlaqueTagPersianPart(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(PlaqueTagPersianPart.class,page,size);
     }

@@ -19,7 +19,7 @@ public class CarGroupAPI {
     @Autowired
     private GenericService<CarGroup> service;
 
-    @PostMapping(path = "/api/carGroup/add")
+    @PostMapping(path = "/basicData/carGroup/add")
     public Long addCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -33,7 +33,7 @@ public class CarGroupAPI {
         return carGroup.getId();
     }
 
-    @PutMapping(path = "/api/carGroup/edit")
+    @PutMapping(path = "/basicData/carGroup/edit")
     public Long editCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -47,18 +47,18 @@ public class CarGroupAPI {
         return carGroup.getId();
     }
 
-    @DeleteMapping(path = "/api/carGroup/remove/{id}")
+    @DeleteMapping(path = "/basicData/carGroup/remove/{id}")
     public Long removeCarGroup(@PathVariable Long id) {
         service.delete(id, CarGroup.class);
         return id;
     }
 
-    @GetMapping(path = "/api/carGroup/{id}")
+    @GetMapping(path = "/basicData/carGroup/{id}")
     public CarGroup getCarGroup(@PathVariable Long id) {
         return service.findOne(CarGroup.class, id);
     }
 
-    @GetMapping(path = "/api/carGroup")
+    @GetMapping(path = "/basicData/carGroup")
     public Page<CarGroup> listCarGroup(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(CarGroup.class,page, size);
     }

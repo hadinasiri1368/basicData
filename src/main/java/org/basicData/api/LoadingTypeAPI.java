@@ -18,7 +18,7 @@ public class LoadingTypeAPI {
     @Autowired
     private GenericService<LoadingType> service;
 
-    @PostMapping(path = "/api/loadingType/add")
+    @PostMapping(path = "/basicData/loadingType/add")
     public Long addLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -26,7 +26,7 @@ public class LoadingTypeAPI {
         return loadingType.getId();
     }
 
-    @PutMapping(path = "/api/loadingType/edit")
+    @PutMapping(path = "/basicData/loadingType/edit")
     public Long editLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -34,18 +34,18 @@ public class LoadingTypeAPI {
         return loadingType.getId();
     }
 
-    @DeleteMapping(path = "/api/loadingType/remove/{id}")
+    @DeleteMapping(path = "/basicData/loadingType/remove/{id}")
     public Long removeLoadingType(@PathVariable Long id) {
         service.delete(id, LoadingType.class);
         return id;
     }
 
-    @GetMapping(path = "/api/loadingType/{id}")
+    @GetMapping(path = "/basicData/loadingType/{id}")
     public LoadingType getLoadingType(@PathVariable Long id) {
         return service.findOne(LoadingType.class, id);
     }
 
-    @GetMapping(path = "/api/loadingType")
+    @GetMapping(path = "/basicData/loadingType")
     public Page<LoadingType> listLoadingType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(LoadingType.class,page,size);
     }

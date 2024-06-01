@@ -19,7 +19,7 @@ public class BaseInfoGoodAPI {
     @Autowired
     private GenericService<BaseInfoGood> service;
 
-    @PostMapping(path = "/api/baseInfoGood/add")
+    @PostMapping(path = "/basicData/baseInfoGood/add")
     public Long addBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -27,7 +27,7 @@ public class BaseInfoGoodAPI {
         return baseInfoGood.getId();
     }
 
-    @PutMapping(path = "/api/baseInfoGood/edit")
+    @PutMapping(path = "/basicData/baseInfoGood/edit")
     public Long editBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -35,18 +35,18 @@ public class BaseInfoGoodAPI {
         return baseInfoGood.getId();
     }
 
-    @DeleteMapping(path = "/api/baseInfoGood/remove/{id}")
+    @DeleteMapping(path = "/basicData/baseInfoGood/remove/{id}")
     public Long removeBaseInfoGood(@PathVariable Long id) {
         service.delete(id, BaseInfoGood.class);
         return id;
     }
 
-    @GetMapping(path = "/api/baseInfoGood/{id}")
+    @GetMapping(path = "/basicData/baseInfoGood/{id}")
     public BaseInfoGood getBaseInfoGood(@PathVariable Long id) {
         return service.findOne(BaseInfoGood.class, id);
     }
 
-    @GetMapping(path = "/api/baseInfoGood")
+    @GetMapping(path = "/basicData/baseInfoGood")
     public Page<BaseInfoGood> listBaseInfoGood(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(BaseInfoGood.class, page, size);
     }

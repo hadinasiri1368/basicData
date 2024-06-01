@@ -17,7 +17,7 @@ public class RequestStatusAPI {
     @Autowired
     private GenericService<RequestStatus> service;
 
-    @PostMapping(path = "/api/requestStatus/add")
+    @PostMapping(path = "/basicData/requestStatus/add")
     public Long addRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -25,7 +25,7 @@ public class RequestStatusAPI {
         return requestStatus.getId();
     }
 
-    @PutMapping(path = "/api/requestStatus/edit")
+    @PutMapping(path = "/basicData/requestStatus/edit")
     public Long editRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -33,18 +33,18 @@ public class RequestStatusAPI {
         return requestStatus.getId();
     }
 
-    @DeleteMapping(path = "/api/requestStatus/remove/{id}")
+    @DeleteMapping(path = "/basicData/requestStatus/remove/{id}")
     public Long removeRequestStatus(@PathVariable Long id) {
         service.delete(id, RequestStatus.class);
         return id;
     }
 
-    @GetMapping(path = "/api/requestStatus/{id}")
+    @GetMapping(path = "/basicData/requestStatus/{id}")
     public RequestStatus getRequestStatus(@PathVariable Long id) {
         return service.findOne(RequestStatus.class, id);
     }
 
-    @GetMapping(path = "/api/requestStatus")
+    @GetMapping(path = "/basicData/requestStatus")
     public Page<RequestStatus> listRequestStatus(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(RequestStatus.class,page,size);
     }

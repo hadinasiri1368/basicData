@@ -18,7 +18,7 @@ public class ProvinceCityAPI {
     @Autowired
     private GenericService<ProvinceCity> service;
 
-    @PostMapping(path = "/api/provinceCity/add")
+    @PostMapping(path = "/basicData/provinceCity/add")
     public Long addProvinceCity(@RequestBody ProvinceCity provinceCity, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -26,7 +26,7 @@ public class ProvinceCityAPI {
         return provinceCity.getId();
     }
 
-    @PutMapping(path = "/api/provinceCity/edit")
+    @PutMapping(path = "/basicData/provinceCity/edit")
     public Long editProvinceCity(@RequestBody ProvinceCity packingType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -34,18 +34,18 @@ public class ProvinceCityAPI {
         return packingType.getId();
     }
 
-    @DeleteMapping(path = "/api/provinceCity/remove/{id}")
+    @DeleteMapping(path = "/basicData/provinceCity/remove/{id}")
     public Long removeProvinceCity(@PathVariable Long id) {
         service.delete(id, ProvinceCity.class);
         return id;
     }
 
-    @GetMapping(path = "/api/provinceCity/{id}")
+    @GetMapping(path = "/basicData/provinceCity/{id}")
     public ProvinceCity getProvinceCity(@PathVariable Long id) {
         return service.findOne(ProvinceCity.class, id);
     }
 
-    @GetMapping(path = "/api/provinceCity")
+    @GetMapping(path = "/basicData/provinceCity")
     public Page<ProvinceCity> listProvinceCity(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(ProvinceCity.class,page,size);
     }

@@ -16,7 +16,7 @@ public class FilterConfig {
     public FilterRegistrationBean<CheckPermission> checkPermissionFilterRegistrationBean() {
         FilterRegistrationBean<CheckPermission> checkPermissionFilterRegistrationBean = new FilterRegistrationBean<>();
         checkPermissionFilterRegistrationBean.setFilter(new CheckPermission(authenticationServiceProxy));
-        checkPermissionFilterRegistrationBean.addUrlPatterns("/api/*");
+        checkPermissionFilterRegistrationBean.addUrlPatterns("/basicData/*");
         return  checkPermissionFilterRegistrationBean;
     }
 }

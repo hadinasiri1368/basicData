@@ -17,7 +17,7 @@ public class FuelTypeAPI {
     @Autowired
     private GenericService<FuelType> service;
 
-    @PostMapping(path = "/api/fuelType/add")
+    @PostMapping(path = "/basicData/fuelType/add")
     public Long addFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -25,7 +25,7 @@ public class FuelTypeAPI {
         return fuelType.getId();
     }
 
-    @PutMapping(path = "/api/fuelType/edit")
+    @PutMapping(path = "/basicData/fuelType/edit")
     public Long editFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
         String uuid = request.getHeader("X-UUID");
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
@@ -33,18 +33,18 @@ public class FuelTypeAPI {
         return fuelType.getId();
     }
 
-    @DeleteMapping(path = "/api/fuelType/remove/{id}")
+    @DeleteMapping(path = "/basicData/fuelType/remove/{id}")
     public Long removeFuelType(@PathVariable Long id) {
         service.delete(id, FuelType.class);
         return id;
     }
 
-    @GetMapping(path = "/api/fuelType/{id}")
+    @GetMapping(path = "/basicData/fuelType/{id}")
     public FuelType getFuelType(@PathVariable Long id) {
         return service.findOne(FuelType.class, id);
     }
 
-    @GetMapping(path = "/api/fuelType")
+    @GetMapping(path = "/basicData/fuelType")
     public Page<FuelType> listFuelType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(FuelType.class,page,size);
     }
