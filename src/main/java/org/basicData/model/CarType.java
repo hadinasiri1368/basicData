@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "[car_property]", schema = "sbd")
-@Entity(name = "carProperty")
+@Table(name = "[car_type]", schema = "sbd")
+@Entity(name = "carType")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarProperty extends BaseEntity{
+public class CarType extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

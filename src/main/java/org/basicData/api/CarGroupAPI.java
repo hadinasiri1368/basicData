@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 import org.basicData.dto.CarGroupDto;
 import org.basicData.model.CarCapacity;
 import org.basicData.model.CarGroup;
+import org.basicData.model.CarType;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,10 +26,12 @@ public class CarGroupAPI {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
-        carGroup.setName(carGroupDto.getName());
         CarCapacity carCapacity = new CarCapacity();
         carCapacity.setId(carGroupDto.getCarCapacityId());
-        carGroup.setCarCapacity(carCapacity);
+        carGroup.setCarCapacityId(carCapacity.getId());
+        CarType carType = new CarType();
+        carType.setId(carGroupDto.getCarTypeId());
+        carGroup.setCarTypeId(carType.getId());
         service.insert(carGroup, userId);
         return carGroup.getId();
     }
@@ -39,10 +42,12 @@ public class CarGroupAPI {
         Long userId = CommonUtils.getUserId(CommonUtils.getToken(request), uuid);
         CarGroup carGroup = new CarGroup();
         carGroup.setId(carGroupDto.getId());
-        carGroup.setName(carGroupDto.getName());
         CarCapacity carCapacity = new CarCapacity();
         carCapacity.setId(carGroupDto.getCarCapacityId());
-        carGroup.setCarCapacity(carCapacity);
+        carGroup.setCarCapacityId(carCapacity.getId());
+        CarType carType = new CarType();
+        carType.setId(carGroupDto.getCarTypeId());
+        carGroup.setCarTypeId(carType.getId());
         service.update(carGroup, userId, CarGroup.class);
         return carGroup.getId();
     }

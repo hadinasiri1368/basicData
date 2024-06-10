@@ -17,9 +17,8 @@ public class CarGroup extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "f_car_capacity_id")
-    private CarCapacity carCapacity;
-    @Column(columnDefinition = "NVARCHAR(50)")
-    private String name;
+    @Column(name = "f_car_capacity_id")
+    private Long carCapacityId;
+    @Column(name = "f_car_type_id")
+    private Long carTypeId;
 }

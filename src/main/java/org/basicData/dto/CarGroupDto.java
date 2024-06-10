@@ -12,5 +12,5 @@ import org.basicData.model.CarCapacity;
 public class CarGroupDto {
     private Long id;
     private Long carCapacityId;
-    private String name;
+    private Long carTypeId;
 }
