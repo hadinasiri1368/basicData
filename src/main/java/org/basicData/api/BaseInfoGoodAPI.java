@@ -1,13 +1,17 @@
 package org.basicData.api;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseInfoGood;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")

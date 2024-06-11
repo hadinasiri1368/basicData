@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
@@ -45,7 +46,7 @@ public class PackingTypeAPI {
 
     @GetMapping(path = "/basicData/packingType")
     public Page<PackingType> listPackingType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
-        return service.findAll(PackingType.class, page, size);
+        return service.findAll(PackingType.class,page,size);
     }
 
 }
