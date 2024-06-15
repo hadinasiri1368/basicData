@@ -32,3 +32,8 @@ springdoc:
     config-url: /basicDataSwagger/v3/api-docs/swagger-config
     disable-swagger-default-url: true
     url: /basicDataSwagger/v3/api-docs
+
+redis:
+  port: 63799
+  size: 512mb
+  root-package-name: org.basicData.model

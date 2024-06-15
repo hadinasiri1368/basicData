@@ -8,6 +8,7 @@ import org.basicData.dto.ExceptionDto;
 import org.basicData.service.AuthenticationServiceProxy;
 import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.Lifecycle;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +19,9 @@ import org.springframework.web.client.RestTemplate;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -105,6 +108,7 @@ public class CommonUtils {
             return null;
         }
     }
+
     public static Long getUserId(String token, String uuid) {
         return longValue(authenticationServiceProxy.getUserId(token, uuid));
     }
@@ -115,5 +119,27 @@ public class CommonUtils {
 
     public static <E> E isNull(E expr1, E expr2) {
         return (!isNull(expr1)) ? expr1 : expr2;
+    }
+
+    public static String getClassName(String fullClassName) {
+        String[] array = fullClassName.split("\\.");
+        return array[array.length - 1];
+    }
+
+    public static <T> T findById(List<T> list, Long id) {
+        Optional<T> optionalEntity = list.stream()
+                .filter(entity -> {
+                    try {
+                        return id.equals(entity.getClass().getMethod("getId").invoke(entity));
+                    } catch (Exception e) {
+                        log.info(String.format("invoke id has exception : %s", e.getMessage()));
+                        return false;
+                    }
+                })
+                .findFirst();
+        if (optionalEntity.isPresent()) {
+            return optionalEntity.get();
+        }
+        return null;
     }
 }

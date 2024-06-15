@@ -21,8 +21,6 @@ import java.util.List;
 public class GenericService<Entity> {
     @Autowired
     private JPA<Entity, Long> genericJPA;
-    @Autowired
-    private EntityManager entityManager;
 
     @Value("${PageRequest.page}")
     private Integer page;
@@ -58,8 +56,7 @@ public class GenericService<Entity> {
 
     @Transactional
     public int delete(Long id, Class<Entity> aClass) {
-        jakarta.persistence.Entity entity = aClass.getAnnotation(jakarta.persistence.Entity.class);
-        int returnValue = entityManager.createQuery("delete  " + entity.name() + " o where o.id=:id").setParameter("id", id).executeUpdate();
+        int returnValue = genericJPA.remove(id, aClass);
         if (returnValue == 0) {
             throw new RuntimeException("3005");
         }
