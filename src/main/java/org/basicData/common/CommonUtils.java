@@ -10,6 +10,9 @@ import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -141,5 +144,26 @@ public class CommonUtils {
             return optionalEntity.get();
         }
         return null;
+    }
+
+    public static <T> Page<T> listPaging(List<T> aClass) {
+        PageRequest pageRequest = PageRequest.ofSize(aClass.size());
+        return listPaging(aClass, pageRequest);
+    }
+
+    public static <T> Page<T> listPaging(List<T> aClass, PageRequest pageRequest) {
+        long countResult = aClass.size();
+        int pageNumber = pageRequest.getPageNumber();
+        int pageSize = pageRequest.getPageSize();
+
+        int fromIndex = pageNumber * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, aClass.size());
+
+        if (fromIndex > toIndex) {
+            fromIndex = toIndex;
+        }
+
+        List<T> subList = aClass.subList(fromIndex, toIndex);
+        return new PageImpl<>(subList, pageRequest, countResult);
     }
 }
