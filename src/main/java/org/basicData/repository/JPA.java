@@ -7,8 +7,9 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.common.CommonUtils;
-import org.basicData.service.DataCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,8 +21,11 @@ import java.util.Optional;
 @Repository
 @Slf4j
 public class JPA<ENTITY, ID> {
+    private final CacheRepository dataCacheService;
     @Autowired
-    private DataCacheService dataCacheService;
+    public JPA(@Lazy CacheRepository dataCacheService) {
+        this.dataCacheService = dataCacheService;
+    }
     @PersistenceContext()
     private EntityManager entityManager;
 
@@ -85,5 +89,13 @@ public class JPA<ENTITY, ID> {
     public Page<ENTITY> findAllWithPaging(Class<ENTITY> aClass, PageRequest pageRequest) {
         List<ENTITY> list = findAll(aClass);
         return new PageImpl<ENTITY>(list, pageRequest, list.isEmpty() ? 1 : list.size());
+    }
+    public List findByNativeQuery(String sql){
+        Query query = entityManager.createNativeQuery(sql);
+        return query.getResultList();
+    }
+    public List findByQuery(String sql){
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
     }
 }

@@ -1,15 +1,19 @@
 package org.basicData.common;
 
-import org.basicData.service.DataCacheService;
+import org.basicData.repository.CacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 @Component
 class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
+    private final CacheRepository dataCacheService;
     @Autowired
-    private DataCacheService dataCacheService;
+    public DataLoader(@Lazy CacheRepository dataCacheService) {
+        this.dataCacheService = dataCacheService;
+    }
     private boolean loaded = false;
 
     @Override
