@@ -16,9 +16,9 @@ spring:
 eureka:
 #  baseServerUrl: 192.168.100.10
     baseServerUrl: localhost
-  client:
-    service-url:
-      defaultZone: http://${eureka.baseServerUrl}:8080/eureka
+    client:
+      service-url:
+        defaultZone: http://${eureka.baseServerUrl}:8080/eureka
 
 
 PageRequest :
@@ -28,7 +28,7 @@ PageRequest :
 springdoc:
   swagger-ui:
     path: index.html
-    server-url: http://localhost:8083
+    server-url: http://localhost:8086
 #    server-url: http://ctiran.ir
     enabled: true
     config-url: /basicDataSwagger/v3/api-docs/swagger-config

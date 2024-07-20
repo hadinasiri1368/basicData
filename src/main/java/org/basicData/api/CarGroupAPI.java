@@ -30,6 +30,8 @@ public class CarGroupAPI {
         CarType carType = new CarType();
         carType.setId(carGroupDto.getCarTypeId());
         carGroup.setCarTypeId(carType.getId());
+        carGroup.setFactorValue(carGroupDto.getFactorValue());
+        carGroup.setCompanyId(carGroupDto.getCompanyId());
         service.insert(carGroup, userId);
         return carGroup.getId();
     }
@@ -46,6 +48,8 @@ public class CarGroupAPI {
         CarType carType = new CarType();
         carType.setId(carGroupDto.getCarTypeId());
         carGroup.setCarTypeId(carType.getId());
+        carGroup.setFactorValue(carGroupDto.getFactorValue());
+        carGroup.setCompanyId(carGroupDto.getCompanyId());
         service.update(carGroup, userId, CarGroup.class);
         return carGroup.getId();
     }

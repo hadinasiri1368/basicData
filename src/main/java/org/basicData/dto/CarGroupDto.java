@@ -13,4 +13,6 @@ public class CarGroupDto {
     private Long id;
     private Long carCapacityId;
     private Long carTypeId;
+    private Long companyId;
+    private String factorValue;
 }

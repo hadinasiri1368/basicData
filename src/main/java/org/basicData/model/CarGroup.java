@@ -21,4 +21,8 @@ public class CarGroup extends BaseEntity {
     private Long carCapacityId;
     @Column(name = "f_car_type_id")
     private Long carTypeId;
+    @Column(name = "f_company_id")
+    private Long companyId;
+    @Column(columnDefinition = "float",name = "factor_value")
+    private String factorValue;
 }

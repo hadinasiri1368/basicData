@@ -20,4 +20,8 @@ public class LoadingType extends BaseEntity {
     private String code;
     @Column(columnDefinition = "NVARCHAR(512)")
     private String name;
+    @Column(name = "f_company_id")
+    private Long companyId;
+    @Column(columnDefinition = "float",name = "factor_value")
+    private String factorValue;
 }
