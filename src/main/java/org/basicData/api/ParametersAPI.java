@@ -9,17 +9,19 @@ import org.basicData.model.ParamCategory;
 import org.basicData.model.ParamType;
 import org.basicData.model.Parameters;
 import org.basicData.service.GenericService;
+import org.basicData.service.ParametersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class ParametersAPI {
     @Autowired
     private GenericService<Parameters> service;
+    @Autowired
+    private ParametersService parametersService;
 
     @PostMapping(path = "/basicData/parameters/add")
     public Long addParameters(@RequestBody ParametersDto parametersDto, HttpServletRequest request) throws Exception {
@@ -57,7 +59,7 @@ public class ParametersAPI {
         paramCategory.setId(parametersDto.getParamCategoryId());
         parameters.setParamCategory(paramCategory);
         parameters.setCompanyId(parametersDto.getCompanyId());
-        service.insert(parameters, userId);
+        service.update(parameters, userId, Parameters.class);
         return parameters.getId();
     }
 
@@ -76,4 +78,10 @@ public class ParametersAPI {
     public Page<Parameters> listParameters(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         return service.findAll(Parameters.class, page, size);
     }
+
+    @GetMapping(path = "/basicData/paramCodeValue")
+    public Parameters parametersValue(@RequestParam String paramCode, @RequestParam Long companyId) {
+        return parametersService.findByCompanyAndCode(paramCode, companyId);
+    }
+
 }

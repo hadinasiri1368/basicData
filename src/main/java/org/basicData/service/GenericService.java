@@ -1,6 +1,5 @@
 package org.basicData.service;
 
-import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseEntity;
@@ -79,5 +78,6 @@ public class GenericService<Entity> {
         return genericJPA.findAllWithPaging(aClass, pageRequest);
 
     }
+
 
 }

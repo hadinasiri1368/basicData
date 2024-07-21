@@ -6,6 +6,7 @@ import org.basicData.common.CommonUtils;
 
 import org.basicData.model.LoadingType;
 import org.basicData.service.GenericService;
+import org.basicData.service.LoadingTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class LoadingTypeAPI {
     @Autowired
     private GenericService<LoadingType> service;
+    @Autowired
+    private LoadingTypeService loadingTypeService;
 
     @PostMapping(path = "/basicData/loadingType/add")
     public Long addLoadingType(@RequestBody LoadingType loadingType, HttpServletRequest request) throws Exception {
@@ -46,7 +49,12 @@ public class LoadingTypeAPI {
 
     @GetMapping(path = "/basicData/loadingType")
     public Page<LoadingType> listLoadingType(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
-        return service.findAll(LoadingType.class,page,size);
+        return service.findAll(LoadingType.class, page, size);
+    }
+
+    @GetMapping(path = "/basicData/loadingTypeValue")
+    public LoadingType listLoadingTypeValue(@RequestParam Long code, @RequestParam Long companyId) {
+        return loadingTypeService.findByCompanyAndCode(code, companyId);
     }
 
 }

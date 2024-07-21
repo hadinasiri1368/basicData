@@ -7,6 +7,7 @@ import org.basicData.dto.CarGroupDto;
 import org.basicData.model.CarCapacity;
 import org.basicData.model.CarGroup;
 import org.basicData.model.CarType;
+import org.basicData.service.CarGroupService;
 import org.basicData.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class CarGroupAPI {
     @Autowired
     private GenericService<CarGroup> service;
+    @Autowired
+    private CarGroupService carGroupService;
 
     @PostMapping(path = "/basicData/carGroup/add")
     public Long addCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
@@ -67,6 +70,12 @@ public class CarGroupAPI {
 
     @GetMapping(path = "/basicData/carGroup")
     public Page<CarGroup> listCarGroup(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
-        return service.findAll(CarGroup.class,page, size);
+        return service.findAll(CarGroup.class, page, size);
     }
+
+    @GetMapping(path = "/basicData/carGroupValue")
+    public CarGroup listLoadingTypeValue(@RequestParam Long carTypeId, @RequestParam Long carCapacityId, @RequestParam Long companyId) {
+        return carGroupService.findByCompanyAndCode(carTypeId, carCapacityId, companyId);
+    }
+
 }
