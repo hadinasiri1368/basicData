@@ -1,5 +1,6 @@
 package org.basicData.config;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalControllerExceptionHandler {
-
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ExceptionDto> response(Exception e, HttpServletRequest request) {
         ExceptionDto exceptionDto = CommonUtils.getException(e);
@@ -28,11 +28,11 @@ public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<ExceptionDto> response(RuntimeException e, HttpServletRequest request) {
-        String message = CommonUtils.getMessage(e.getMessage());
+        String message = e.getMessage();
         log.info("RequestURL:" + request.getRequestURL() + "  UUID=" + request.getHeader("X-UUID") + "  ServiceRuntimeException:" + message);
         return new ResponseEntity<>(ExceptionDto.builder()
                 .errorMessage(message)
-                .errorCode(CommonUtils.longValue(e.getMessage()).intValue())
+                .errorCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .uuid(request.getHeader("X-UUID"))
                 .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .build(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,5 +72,17 @@ public class GlobalControllerExceptionHandler {
                 .uuid(request.getHeader("X-UUID"))
                 .errorStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .build(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = SQLServerException.class)
+    public ResponseEntity<ExceptionDto> handleDuplicateKeyException(SQLServerException e, HttpServletRequest request) {
+        ExceptionDto exceptionDto = CommonUtils.getException(e);
+        log.info("RequestURL:" + request.getRequestURL() + "  UUID=" + request.getHeader("X-UUID") + "  DuplicateKey:" + e.getMessage());
+        return new ResponseEntity<>(ExceptionDto.builder()
+                .errorMessage(exceptionDto.getErrorMessage())
+                .errorCode(exceptionDto.getErrorCode())
+                .uuid(request.getHeader("X-UUID"))
+                .errorStatus(HttpStatus.CONFLICT.value())
+                .build(), HttpStatus.CONFLICT);
     }
 }

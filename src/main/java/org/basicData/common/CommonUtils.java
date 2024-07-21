@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,5 +142,19 @@ public class CommonUtils {
             return optionalEntity.get();
         }
         return null;
+    }
+
+    public static ExceptionDto getException(SQLException exception) {
+        if (exception.getMessage().toLowerCase().contains("duplicate key")) {
+            return ExceptionDto.builder()
+                    .errorCode(409)
+                    .errorMessage(getMessage("3007"))
+                    .build();
+        } else {
+            return ExceptionDto.builder()
+                    .errorCode(409)
+                    .errorMessage("3008")
+                    .build();
+        }
     }
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "parameters", schema = "sbd")
+@Table(name = "parameters", schema = "sbd", uniqueConstraints = {@UniqueConstraint(name = "UK_company_param", columnNames = {"f_company_id", "param_code"})})
 @Entity(name = "parameters")
 @Getter
 @Setter
@@ -18,7 +18,7 @@ public class Parameters extends BaseEntity {
     private Long id;
     @Column(columnDefinition = "NVARCHAR(250)", name = "param_name")
     private String paramName;
-    @Column(columnDefinition = "NVARCHAR(250)",name = "param_code")
+    @Column(columnDefinition = "NVARCHAR(250)", name = "param_code")
     private String paramCode;
     @ManyToOne
     @JoinColumn(name = "f_param_type_id")
@@ -26,9 +26,9 @@ public class Parameters extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "f_param_category_id")
     private ParamCategory paramCategory;
-    @Column(name = "f_company_id")
+    @Column(columnDefinition = "decimal(18, 0)", name = "f_company_id")
     private Long companyId;
-    @Column(columnDefinition = "NVARCHAR(50)",name = "value")
+    @Column(columnDefinition = "NVARCHAR(50)", name = "value")
     private String value;
 }
 
