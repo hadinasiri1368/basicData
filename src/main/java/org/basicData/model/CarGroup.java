@@ -24,5 +24,5 @@ public class CarGroup extends BaseEntity {
     @Column(columnDefinition = "decimal(18, 0)", name = "f_company_id")
     private Long companyId;
     @Column(columnDefinition = "float", name = "factor_value")
-    private String factorValue;
+    private Float factorValue;
 }

@@ -19,8 +19,11 @@ public class CarCapacity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(columnDefinition = "NVARCHAR(50)")
-    private String code;
+    private Long code;
     @Column(columnDefinition = "NVARCHAR(50)")
     private String name;
-
+    @Column(columnDefinition = "float" , name = "max_capacity")
+    private  Long maxCapacity;
+    @Column(columnDefinition = "float" , name = "min_capacity")
+    private  Long minCapacity;
 }
