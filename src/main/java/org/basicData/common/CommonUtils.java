@@ -10,6 +10,7 @@ import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -145,6 +146,20 @@ public class CommonUtils {
     }
 
     public static ExceptionDto getException(SQLException exception) {
+        if (exception.getMessage().toLowerCase().contains("duplicate key")) {
+            return ExceptionDto.builder()
+                    .errorCode(409)
+                    .errorMessage(getMessage("3007"))
+                    .build();
+        } else {
+            return ExceptionDto.builder()
+                    .errorCode(409)
+                    .errorMessage("3008")
+                    .build();
+        }
+    }
+
+    public static ExceptionDto getException(DataIntegrityViolationException exception) {
         if (exception.getMessage().toLowerCase().contains("duplicate key")) {
             return ExceptionDto.builder()
                     .errorCode(409)

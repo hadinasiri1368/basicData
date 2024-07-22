@@ -6,10 +6,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.common.CommonUtils;
 import org.basicData.dto.ExceptionDto;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.sql.SQLException;
 
 @RestControllerAdvice
 @Slf4j
@@ -74,8 +77,20 @@ public class GlobalControllerExceptionHandler {
                 .build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = SQLServerException.class)
+    @ExceptionHandler(value = SQLException.class)
     public ResponseEntity<ExceptionDto> handleDuplicateKeyException(SQLServerException e, HttpServletRequest request) {
+        ExceptionDto exceptionDto = CommonUtils.getException(e);
+        log.info("RequestURL:" + request.getRequestURL() + "  UUID=" + request.getHeader("X-UUID") + "  DuplicateKey:" + e.getMessage());
+        return new ResponseEntity<>(ExceptionDto.builder()
+                .errorMessage(exceptionDto.getErrorMessage())
+                .errorCode(exceptionDto.getErrorCode())
+                .uuid(request.getHeader("X-UUID"))
+                .errorStatus(HttpStatus.CONFLICT.value())
+                .build(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    public ResponseEntity<ExceptionDto> handleDuplicateKeyException(DataIntegrityViolationException  e, HttpServletRequest request) {
         ExceptionDto exceptionDto = CommonUtils.getException(e);
         log.info("RequestURL:" + request.getRequestURL() + "  UUID=" + request.getHeader("X-UUID") + "  DuplicateKey:" + e.getMessage());
         return new ResponseEntity<>(ExceptionDto.builder()
