@@ -22,8 +22,8 @@ public class CarCapacity extends BaseEntity {
     private Long code;
     @Column(columnDefinition = "NVARCHAR(50)")
     private String name;
-    @Column(columnDefinition = "float" , name = "max_capacity")
+    @Column(columnDefinition = "int" , name = "max_capacity")
     private  Long maxCapacity;
-    @Column(columnDefinition = "float" , name = "min_capacity")
+    @Column(columnDefinition = "int" , name = "min_capacity")
     private  Long minCapacity;
 }

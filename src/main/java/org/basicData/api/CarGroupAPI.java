@@ -74,8 +74,8 @@ public class CarGroupAPI {
     }
 
     @GetMapping(path = "/basicData/carGroupValue")
-    public CarGroup listLoadingTypeValue(@RequestParam Long carTypeId, @RequestParam Long carCapacityId, @RequestParam Long companyId) {
-        return carGroupService.findByCompanyAndCode(carTypeId, carCapacityId, companyId);
+    public CarGroup carGroupValue(@RequestParam Long carTypeId, @RequestParam Long carCapacityId, @RequestParam Long companyId) {
+        return  carGroupService.findByCompanyAndCode(carTypeId, carCapacityId, companyId);
     }
 
 }

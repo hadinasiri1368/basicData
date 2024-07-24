@@ -1,6 +1,7 @@
 package org.basicData.service;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.model.LoadingType;
@@ -12,7 +13,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class LoadingTypeService {
-    @Autowired
+    @PersistenceContext
     EntityManager entityManager;
 
     public LoadingType findByCompanyAndCode(Long code, Long companyId) {

@@ -1,10 +1,10 @@
 package org.basicData.service;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.model.CarGroup;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class CarGroupService {
-    @Autowired
+    @PersistenceContext
     EntityManager entityManager;
 
     public CarGroup findByCompanyAndCode(Long carTypeId, Long carCapacityId, Long companyId) {
@@ -22,6 +22,7 @@ public class CarGroupService {
         query.setParameter("carTypeId", carTypeId);
         query.setParameter("carCapacityId", carCapacityId);
         List<CarGroup> resultList = query.getResultList();
+
         if (resultList.isEmpty()) {
             return null;
         } else {

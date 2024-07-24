@@ -26,7 +26,7 @@ public class JPA<ENTITY, ID> {
     public JPA(@Lazy CacheRepository dataCacheService) {
         this.dataCacheService = dataCacheService;
     }
-    @PersistenceContext()
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Transactional

@@ -1,6 +1,7 @@
 package org.basicData.service;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.model.Parameters;
@@ -11,7 +12,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class ParametersService {
-    @Autowired
+    @PersistenceContext
     EntityManager entityManager;
     public Parameters findByCompanyAndCode(String code, Long id) {
         String hql = "select o from parameters o where o.companyId = :id and o.paramCode = :code";
