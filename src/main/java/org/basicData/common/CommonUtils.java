@@ -57,6 +57,9 @@ public class CommonUtils {
             )
                 return true;
             return false;
+        } else if (o instanceof List) {
+            if (((List) o).isEmpty())
+                return true;
         }
         return o == null ? true : false;
     }
