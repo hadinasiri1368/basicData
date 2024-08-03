@@ -6,7 +6,6 @@ import org.basicData.common.CommonUtils;
 
 import org.basicData.model.ProvinceCity;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class ProvinceCityAPI {
-    @Autowired
-    private GenericService<ProvinceCity> service;
+    private final GenericService<ProvinceCity> service;
+
+    public ProvinceCityAPI(GenericService<ProvinceCity> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/provinceCity/add")
     public Long addProvinceCity(@RequestBody ProvinceCity provinceCity, HttpServletRequest request) throws Exception {
@@ -35,8 +37,7 @@ public class ProvinceCityAPI {
 
     @DeleteMapping(path = "/basicData/provinceCity/remove/{id}")
     public Long removeProvinceCity(@PathVariable Long id) {
-        service.delete(id, ProvinceCity.class);
-        return id;
+        return (long) service.delete(id, ProvinceCity.class);
     }
 
     @GetMapping(path = "/basicData/provinceCity/{id}")
@@ -46,7 +47,7 @@ public class ProvinceCityAPI {
 
     @GetMapping(path = "/basicData/provinceCity")
     public Page<ProvinceCity> listProvinceCity(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
-        return service.findAll(ProvinceCity.class,page,size);
+        return service.findAll(ProvinceCity.class, page, size);
     }
 
 }

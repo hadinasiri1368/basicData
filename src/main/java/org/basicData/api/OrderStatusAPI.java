@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.OrderStatus;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class OrderStatusAPI {
-    @Autowired
-    private GenericService<OrderStatus> service;
+    private final GenericService<OrderStatus> service;
+
+    public OrderStatusAPI(GenericService<OrderStatus> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/orderStatus/add")
     public Long addOrderStatus(@RequestBody OrderStatus orderStatus, HttpServletRequest request) throws Exception {
@@ -34,8 +36,7 @@ public class OrderStatusAPI {
 
     @DeleteMapping(path = "/basicData/orderStatus/remove/{id}")
     public Long removeOrderStatus(@PathVariable Long id) {
-        service.delete(id, OrderStatus.class);
-        return id;
+        return (long) service.delete(id, OrderStatus.class);
     }
 
     @GetMapping(path = "/basicData/orderStatus/{id}")

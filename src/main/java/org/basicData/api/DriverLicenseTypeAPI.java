@@ -5,15 +5,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.DriverLicenseType;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class DriverLicenseTypeAPI {
-    @Autowired
-    private GenericService<DriverLicenseType> service;
+    private final GenericService<DriverLicenseType> service;
+
+    public DriverLicenseTypeAPI(GenericService<DriverLicenseType> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/driverLicenseType/add")
     public Long addDriverLicenseType(@RequestBody DriverLicenseType driverLicenseType, HttpServletRequest request) throws Exception {
@@ -33,8 +35,7 @@ public class DriverLicenseTypeAPI {
 
     @DeleteMapping(path = "/basicData/driverLicenseType/remove/{id}")
     public Long removeDriverLicenseType(@PathVariable Long id) {
-        service.delete(id, DriverLicenseType.class);
-        return id;
+        return (long) service.delete(id, DriverLicenseType.class);
     }
 
     @GetMapping(path = "/basicData/driverLicenseType/{id}")

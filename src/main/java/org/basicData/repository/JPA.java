@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -97,5 +98,13 @@ public class JPA<ENTITY, ID> {
     public List findByQuery(String sql){
         Query query = entityManager.createQuery(sql);
         return query.getResultList();
+    }
+
+    public int executeUpdate(Query query, Map<String, Object> param) {
+        if (!CommonUtils.isNull(param) && !param.isEmpty())
+            for (Map.Entry<String , Object> entry : param.entrySet()) {
+                query.setParameter(entry.getKey(), entry.getValue());
+            }
+        return query.executeUpdate();
     }
 }

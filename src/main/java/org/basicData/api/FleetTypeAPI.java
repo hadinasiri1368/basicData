@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.FleetType;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class FleetTypeAPI {
-    @Autowired
-    private GenericService<FleetType> service;
+    private final GenericService<FleetType> service;
+
+    public FleetTypeAPI(GenericService<FleetType> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/fleetType/add")
     public Long addFleetType(@RequestBody FleetType fleetType, HttpServletRequest request) throws Exception {
@@ -35,8 +37,7 @@ public class FleetTypeAPI {
 
     @DeleteMapping(path = "/basicData/fleetType/remove/{id}")
     public Long removeFleetType(@PathVariable Long id) {
-        service.delete(id, FleetType.class);
-        return id;
+        return (long) service.delete(id, FleetType.class);
     }
 
     @GetMapping(path = "/basicData/fleetType/{id}")

@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.RequestStatus;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class RequestStatusAPI {
-    @Autowired
-    private GenericService<RequestStatus> service;
+    private final GenericService<RequestStatus> service;
+
+    public RequestStatusAPI(GenericService<RequestStatus> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/requestStatus/add")
     public Long addRequestStatus(@RequestBody RequestStatus requestStatus, HttpServletRequest request) throws Exception {
@@ -45,7 +47,7 @@ public class RequestStatusAPI {
 
     @GetMapping(path = "/basicData/requestStatus")
     public Page<RequestStatus> listRequestStatus(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
-        return service.findAll(RequestStatus.class,page,size);
+        return service.findAll(RequestStatus.class, page, size);
     }
 
 }

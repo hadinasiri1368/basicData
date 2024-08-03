@@ -5,15 +5,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.FuelType;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class FuelTypeAPI {
-    @Autowired
-    private GenericService<FuelType> service;
+    private final GenericService<FuelType> service;
+
+    public FuelTypeAPI(GenericService<FuelType> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/fuelType/add")
     public Long addFuelType(@RequestBody FuelType fuelType, HttpServletRequest request) throws Exception {
@@ -33,8 +35,7 @@ public class FuelTypeAPI {
 
     @DeleteMapping(path = "/basicData/fuelType/remove/{id}")
     public Long removeFuelType(@PathVariable Long id) {
-        service.delete(id, FuelType.class);
-        return id;
+        return (long) service.delete(id, FuelType.class);
     }
 
     @GetMapping(path = "/basicData/fuelType/{id}")

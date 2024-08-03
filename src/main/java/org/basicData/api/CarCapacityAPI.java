@@ -5,15 +5,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.CarCapacity;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class CarCapacityAPI {
-    @Autowired
-    private GenericService<CarCapacity> service;
+    private final GenericService<CarCapacity> service;
+
+    public CarCapacityAPI(GenericService<CarCapacity> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/carCapacity/add")
     public Long addCarCapacity(@RequestBody CarCapacity carCapacity, HttpServletRequest request) throws Exception {
@@ -33,8 +35,7 @@ public class CarCapacityAPI {
 
     @DeleteMapping(path = "/basicData/carCapacity/remove/{id}")
     public Long removeCarCapacity(@PathVariable Long id) {
-        service.delete(id, CarCapacity.class);
-        return id;
+        return (long) service.delete(id, CarCapacity.class);
     }
 
     @GetMapping(path = "/basicData/carCapacity/{id}")

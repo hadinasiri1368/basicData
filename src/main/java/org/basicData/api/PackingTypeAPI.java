@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.PackingType;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class PackingTypeAPI {
-    @Autowired
-    private GenericService<PackingType> service;
+    private final GenericService<PackingType> service;
+
+    public PackingTypeAPI(GenericService<PackingType> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/packingType/add")
     public Long addPackingType(@RequestBody PackingType packingType, HttpServletRequest request) throws Exception {
@@ -34,8 +36,7 @@ public class PackingTypeAPI {
 
     @DeleteMapping(path = "/basicData/packingType/remove/{id}")
     public Long removePackingType(@PathVariable Long id) {
-        service.delete(id, PackingType.class);
-        return id;
+        return (long) service.delete(id, PackingType.class);
     }
 
     @GetMapping(path = "/basicData/packingType/{id}")

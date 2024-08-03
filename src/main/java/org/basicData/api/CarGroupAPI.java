@@ -8,18 +8,18 @@ import org.basicData.model.CarCapacity;
 import org.basicData.model.CarGroup;
 import org.basicData.model.CarType;
 import org.basicData.service.CarGroupService;
-import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class CarGroupAPI {
-    @Autowired
-    private GenericService<CarGroup> service;
-    @Autowired
-    private CarGroupService carGroupService;
+
+    private final CarGroupService carGroupService;
+
+    public CarGroupAPI(CarGroupService carGroupService) {
+        this.carGroupService = carGroupService;
+    }
 
     @PostMapping(path = "/basicData/carGroup/add")
     public Long addCarGroup(@RequestBody CarGroupDto carGroupDto, HttpServletRequest request) throws Exception {
@@ -35,7 +35,7 @@ public class CarGroupAPI {
         carGroup.setCarTypeId(carType.getId());
         carGroup.setFactorValue(carGroupDto.getFactorValue());
         carGroup.setCompanyId(carGroupDto.getCompanyId());
-        service.insert(carGroup, userId);
+        carGroupService.insert(carGroup, userId);
         return carGroup.getId();
     }
 
@@ -53,29 +53,28 @@ public class CarGroupAPI {
         carGroup.setCarTypeId(carType.getId());
         carGroup.setFactorValue(carGroupDto.getFactorValue());
         carGroup.setCompanyId(carGroupDto.getCompanyId());
-        service.update(carGroup, userId, CarGroup.class);
+        carGroupService.update(carGroup, userId);
         return carGroup.getId();
     }
 
     @DeleteMapping(path = "/basicData/carGroup/remove/{id}")
     public Long removeCarGroup(@PathVariable Long id) {
-        service.delete(id, CarGroup.class);
-        return id;
+        return (long) carGroupService.delete(id);
     }
 
     @GetMapping(path = "/basicData/carGroup/{id}")
     public CarGroup getCarGroup(@PathVariable Long id) {
-        return service.findOne(CarGroup.class, id);
+        return carGroupService.findOne(CarGroup.class, id);
     }
 
     @GetMapping(path = "/basicData/carGroup")
     public Page<CarGroup> listCarGroup(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
-        return service.findAll(CarGroup.class, page, size);
+        return carGroupService.findAll(CarGroup.class, page, size);
     }
 
     @GetMapping(path = "/basicData/carGroupValue")
     public CarGroup carGroupValue(@RequestParam Long carTypeId, @RequestParam Long carCapacityId, @RequestParam Long companyId) {
-        return  carGroupService.findByCompanyAndCode(carTypeId, carCapacityId, companyId);
+        return carGroupService.findByCompanyAndCode(carTypeId, carCapacityId, companyId);
     }
 
 }

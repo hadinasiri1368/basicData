@@ -5,15 +5,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.ParamCategory;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class ParamCategoryAPI {
-    @Autowired
-    private GenericService<ParamCategory> service;
+    private final GenericService<ParamCategory> service;
+
+    public ParamCategoryAPI(GenericService<ParamCategory> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/paramCategory/add")
     public Long addParamCategory(@RequestBody ParamCategory paramCategory, HttpServletRequest request) throws Exception {
@@ -33,8 +35,7 @@ public class ParamCategoryAPI {
 
     @DeleteMapping(path = "/basicData/paramCategory/remove/{id}")
     public Long removeParamCategory(@PathVariable Long id) {
-        service.delete(id, ParamCategory.class);
-        return id;
+        return (long) service.delete(id, ParamCategory.class);
     }
 
     @GetMapping(path = "/basicData/paramCategory/{id}")

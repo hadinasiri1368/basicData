@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.PlaqueTagPersianPart;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class PlaqueTagPersianPartAPI {
-    @Autowired
-    private GenericService<PlaqueTagPersianPart> service;
+    private final GenericService<PlaqueTagPersianPart> service;
+
+    public PlaqueTagPersianPartAPI(GenericService<PlaqueTagPersianPart> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/plaqueTagPersianPart/add")
     public Long addPlaqueTagPersianPart(@RequestBody PlaqueTagPersianPart plaqueTagPersianPart, HttpServletRequest request) throws Exception {
@@ -34,8 +36,7 @@ public class PlaqueTagPersianPartAPI {
 
     @DeleteMapping(path = "/basicData/plaqueTagPersianPart/remove/{id}")
     public Long removePlaqueTagPersianPart(@PathVariable Long id) {
-        service.delete(id, PlaqueTagPersianPart.class);
-        return id;
+        return (long) service.delete(id, PlaqueTagPersianPart.class);
     }
 
     @GetMapping(path = "/basicData/plaqueTagPersianPart/{id}")

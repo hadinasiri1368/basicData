@@ -6,15 +6,17 @@ import org.basicData.common.CommonUtils;
 import org.basicData.dto.CountryDivisionDto;
 import org.basicData.model.CountryDivision;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class CountryDivisionAPI {
-    @Autowired
-    private GenericService<CountryDivision> service;
+    private final GenericService<CountryDivision> service;
+
+    public CountryDivisionAPI(GenericService<CountryDivision> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/countryDivision/add")
     public Long addCountryDivision(@RequestBody CountryDivisionDto countryDivisionDto, HttpServletRequest request) throws Exception {
@@ -52,8 +54,7 @@ public class CountryDivisionAPI {
 
     @DeleteMapping(path = "/basicData/countryDivision/remove/{id}")
     public Long removeCountryDivision(@PathVariable Long id) {
-        service.delete(id, CountryDivision.class);
-        return id;
+        return (long) service.delete(id, CountryDivision.class);
     }
 
     @GetMapping(path = "/basicData/countryDivision/{id}")

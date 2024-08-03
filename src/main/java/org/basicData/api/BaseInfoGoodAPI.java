@@ -5,15 +5,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.model.BaseInfoGood;
 import org.basicData.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
 public class BaseInfoGoodAPI {
-    @Autowired
-    private GenericService<BaseInfoGood> service;
+    private final GenericService<BaseInfoGood> service;
+
+    public BaseInfoGoodAPI(GenericService<BaseInfoGood> service) {
+        this.service = service;
+    }
 
     @PostMapping(path = "/basicData/baseInfoGood/add")
     public Long addBaseInfoGood(@RequestBody BaseInfoGood baseInfoGood, HttpServletRequest request) throws Exception {
@@ -33,8 +35,7 @@ public class BaseInfoGoodAPI {
 
     @DeleteMapping(path = "/basicData/baseInfoGood/remove/{id}")
     public Long removeBaseInfoGood(@PathVariable Long id) {
-        service.delete(id, BaseInfoGood.class);
-        return id;
+        return (long) service.delete(id, BaseInfoGood.class);
     }
 
     @GetMapping(path = "/basicData/baseInfoGood/{id}")
