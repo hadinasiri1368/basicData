@@ -89,7 +89,8 @@ public class JPA<ENTITY, ID> {
 
     public Page<ENTITY> findAllWithPaging(Class<ENTITY> aClass, PageRequest pageRequest) {
         List<ENTITY> list = findAll(aClass);
-        return new PageImpl<ENTITY>(list, pageRequest, list.isEmpty() ? 1 : list.size());
+        return CommonUtils.listPaging(list, pageRequest);
+//        return new PageImpl<ENTITY>(list, pageRequest, list.isEmpty() ? 1 : list.size());
     }
     public List findByNativeQuery(String sql){
         Query query = entityManager.createNativeQuery(sql);
