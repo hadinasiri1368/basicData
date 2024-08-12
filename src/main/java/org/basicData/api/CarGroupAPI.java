@@ -4,12 +4,16 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
 import org.basicData.dto.CarGroupDto;
+import org.basicData.dto.PersonDto;
 import org.basicData.model.CarCapacity;
 import org.basicData.model.CarGroup;
 import org.basicData.model.CarType;
 import org.basicData.service.CarGroupService;
+import org.basicData.service.TransportServiceProxcy;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
@@ -29,11 +33,10 @@ public class CarGroupAPI {
         carGroup.setId(carGroupDto.getId());
         CarCapacity carCapacity = new CarCapacity();
         carCapacity.setId(carGroupDto.getCarCapacityId());
-        carGroup.setCarCapacityId(carCapacity.getId());
         CarType carType = new CarType();
         carType.setId(carGroupDto.getCarTypeId());
-        carGroup.setCarTypeId(carType.getId());
         carGroup.setFactorValue(carGroupDto.getFactorValue());
+        carGroup.setCompanyId(carGroupDto.getCompanyId());
         carGroup.setCompanyId(carGroupDto.getCompanyId());
         carGroupService.insert(carGroup, userId);
         return carGroup.getId();
@@ -47,10 +50,8 @@ public class CarGroupAPI {
         carGroup.setId(carGroupDto.getId());
         CarCapacity carCapacity = new CarCapacity();
         carCapacity.setId(carGroupDto.getCarCapacityId());
-        carGroup.setCarCapacityId(carCapacity.getId());
         CarType carType = new CarType();
         carType.setId(carGroupDto.getCarTypeId());
-        carGroup.setCarTypeId(carType.getId());
         carGroup.setFactorValue(carGroupDto.getFactorValue());
         carGroup.setCompanyId(carGroupDto.getCompanyId());
         carGroupService.update(carGroup, userId);
@@ -76,5 +77,13 @@ public class CarGroupAPI {
     public CarGroup carGroupValue(@RequestParam Long carTypeId, @RequestParam Long carCapacityId, @RequestParam Long companyId) {
         return carGroupService.findByCompanyAndCode(carTypeId, carCapacityId, companyId);
     }
+
+    @GetMapping(path = "/basicData/carGroupDto")
+    public Page<CarGroupDto> carGroupDto(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, HttpServletRequest request) {
+        String uuid = request.getHeader("X-UUID");
+        String token = CommonUtils.getToken(request);
+        return carGroupService.findAll(uuid, token, page, size);
+    }
+
 
 }

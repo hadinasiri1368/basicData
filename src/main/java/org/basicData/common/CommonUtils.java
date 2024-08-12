@@ -6,9 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.dto.ExceptionDto;
 import org.basicData.service.AuthenticationServiceProxy;
-import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.Lifecycle;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -174,7 +172,7 @@ public class CommonUtils {
         } else {
             return ExceptionDto.builder()
                     .errorCode(409)
-                    .errorMessage("3008")
+                    .errorMessage(getMessage("3008"))
                     .build();
         }
     }

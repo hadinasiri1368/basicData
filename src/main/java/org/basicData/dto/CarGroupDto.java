@@ -1,18 +1,22 @@
 package org.basicData.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.basicData.model.CarCapacity;
 
 @AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 public class CarGroupDto {
     private Long id;
     private Long carCapacityId;
+    private String carCapacityName;
     private Long carTypeId;
+    private String carTypeName;
     private Long companyId;
+    private String companyName;
     private Float factorValue;
+
 }
