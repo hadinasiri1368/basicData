@@ -78,7 +78,7 @@ public class CarGroupAPI {
         return carGroupService.findByCompanyAndCode(carTypeId, carCapacityId, companyId);
     }
 
-    @GetMapping(path = "/basicData/carGroupDto")
+    @GetMapping(path = "/basicData/carGroupData")
     public Page<CarGroupDto> carGroupDto(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, HttpServletRequest request) {
         String uuid = request.getHeader("X-UUID");
         String token = CommonUtils.getToken(request);

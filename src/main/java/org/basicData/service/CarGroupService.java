@@ -101,15 +101,14 @@ public class CarGroupService {
         }
     }
 
-    public Page<CarGroupDto> findAll(String token, String uuid , Integer page, Integer size) {
+    public Page<CarGroupDto> findAll(String token, String uuid, Integer page, Integer size) {
         List<CarGroup> carGroupList = new ArrayList<>();
-
         carGroupList = findAll(CarGroup.class);
         Page<PersonDto> personDtoPage = transportServiceProxcy.getPerson(token, uuid);
         List<PersonDto> personDtoList = personDtoPage.getContent();
         List<CarGroupDto> carGroupDtoList = new ArrayList<>();
         for (CarGroup carGroup : carGroupList) {
-            Optional<PersonDto> personDto = personDtoList.stream().filter(a -> a.getId()==carGroup.getCompanyId()).findFirst();
+            Optional<PersonDto> personDto = personDtoList.stream().filter(a -> a.getId() == carGroup.getCompanyId()).findFirst();
             CarGroupDto carGroupDto = new CarGroupDto();
             carGroupDto.setId(carGroup.getId());
             carGroupDto.setCarCapacityId(carGroup.getCarCapacity().getId());
