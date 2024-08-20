@@ -18,4 +18,6 @@ public class PlaqueTagPersianPart extends BaseEntity {
     private Long id;
     @Column(columnDefinition = "NVARCHAR(50)")
     private String name;
+    @Column(columnDefinition = "NVARCHAR(50)")
+    private String code;
 }

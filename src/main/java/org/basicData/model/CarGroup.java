@@ -17,10 +17,12 @@ public class CarGroup extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "f_car_capacity_id")
-    private Long carCapacityId;
-    @Column(name = "f_car_type_id")
-    private Long carTypeId;
+    @ManyToOne
+    @JoinColumn(name = "f_car_capacity_id")
+    private CarCapacity carCapacity;
+    @ManyToOne
+    @JoinColumn(name = "f_car_type_id")
+    private CarType carType;
     @Column(columnDefinition = "decimal(18, 0)", name = "f_company_id")
     private Long companyId;
     @Column(columnDefinition = "float", name = "factor_value")

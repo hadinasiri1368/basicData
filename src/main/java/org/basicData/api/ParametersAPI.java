@@ -83,4 +83,11 @@ public class ParametersAPI {
         return parametersService.findByCompanyAndCode(paramCode, companyId);
     }
 
+    @GetMapping(path = "/basicData/parametrsData")
+    public Page<ParametersDto> parametersData(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, HttpServletRequest request) {
+        String uuid = request.getHeader("X-UUID");
+        String token = CommonUtils.getToken(request);
+        return parametersService.findAll(token, uuid, page, size);
+    }
+
 }

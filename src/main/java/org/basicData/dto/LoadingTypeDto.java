@@ -9,14 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CarGroupDto {
+public class LoadingTypeDto {
     private Long id;
-    private Long carCapacityId;
-    private String carCapacityName;
-    private Long carTypeId;
-    private String carTypeName;
+    private String name;
+    private String code;
     private Long companyId;
     private String companyName;
     private Float factorValue;
-
 }

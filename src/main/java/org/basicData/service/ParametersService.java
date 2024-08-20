@@ -5,6 +5,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.extern.slf4j.Slf4j;
 import org.basicData.common.CommonUtils;
+import org.basicData.dto.ParametersDto;
+import org.basicData.dto.PersonDto;
 import org.basicData.model.Parameters;
 import org.basicData.repository.JPA;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -26,8 +25,11 @@ public class ParametersService {
 
     private final JPA<Parameters, Long> parametersJPA;
 
-    public ParametersService(JPA<Parameters, Long> parametersJPA) {
+    private final TransportServiceProxcy transportServiceProxcy;
+
+    public ParametersService(JPA<Parameters, Long> parametersJPA, TransportServiceProxcy transportServiceProxcy) {
         this.parametersJPA = parametersJPA;
+        this.transportServiceProxcy = transportServiceProxcy;
     }
 
     @Value("${PageRequest.page}")
@@ -46,10 +48,8 @@ public class ParametersService {
 
     @Transactional
     public void update(Parameters parameters, Long userId) throws Exception {
-        if (CommonUtils.isNull(parameters.getId()))
-            throw new RuntimeException("3005");
-        if (CommonUtils.isNull(findOne(Parameters.class, parameters.getId())))
-            throw new RuntimeException("3005");
+        if (CommonUtils.isNull(parameters.getId())) throw new RuntimeException("3005");
+        if (CommonUtils.isNull(findOne(Parameters.class, parameters.getId()))) throw new RuntimeException("3005");
         parameters.setUpdatedUserId(userId);
         parameters.setUpdatedDateTime(new Date());
         parametersJPA.update(parameters);
@@ -96,5 +96,32 @@ public class ParametersService {
         } else {
             return resultList.get(0);
         }
+    }
+
+    public Page<ParametersDto> findAll(String token, String uuid, Integer page, Integer size) {
+        List<Parameters> parametersList = new ArrayList<>();
+        parametersList = findAll(Parameters.class);
+        Page<PersonDto> personDtoPage = transportServiceProxcy.getPerson(token, uuid);
+        List<PersonDto> personDtoList = personDtoPage.getContent();
+        List<ParametersDto> parametersDtos = new ArrayList<>();
+        for (Parameters parameters : parametersList) {
+            Optional<PersonDto> personDto = personDtoList.stream().filter(a -> a.getId() == parameters.getCompanyId()).findFirst();
+            ParametersDto parametersDto = new ParametersDto();
+            parametersDto.setParamName(parameters.getParamName());
+            parametersDto.setParamCode(parameters.getParamCode());
+            parametersDto.setParamCategoryId(parameters.getParamCategory().getId());
+            parametersDto.setParamCategoryName(parameters.getParamCategory().getName());
+            parametersDto.setParamTypeId(parameters.getParamType().getId());
+            parametersDto.setParamTypeName(parameters.getParamType().getName());
+            parametersDto.setCompanyId(parameters.getCompanyId());
+            parametersDto.setCompanyName(personDto.get().getName());
+            parametersDto.setValue(parameters.getValue());
+            parametersDtos.add(parametersDto);
+        }
+        if (CommonUtils.isNull(page) && CommonUtils.isNull(size)) {
+            return CommonUtils.listPaging(parametersDtos);
+        }
+        PageRequest pageRequest = PageRequest.of(CommonUtils.isNull(page, this.page), CommonUtils.isNull(size, this.size));
+        return CommonUtils.listPaging(parametersDtos, pageRequest);
     }
 }
