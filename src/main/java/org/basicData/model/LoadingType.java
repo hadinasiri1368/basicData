@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "loading_type", schema = "sbd", uniqueConstraints = {@UniqueConstraint(name = "UK_company_code", columnNames = {"f_company_id", "code"})})
+@Table(name = "loading_type", schema = "sbd")
 @Entity(name = "loadingType")
 @Getter
 @Setter
@@ -20,8 +20,4 @@ public class LoadingType extends BaseEntity {
     private String code;
     @Column(columnDefinition = "NVARCHAR(512)")
     private String name;
-    @Column(columnDefinition = "decimal(18, 0)", name = "f_company_id")
-    private Long companyId;
-    @Column(columnDefinition = "float", name = "factor_value")
-    private Float factorValue;
 }

@@ -9,11 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LoadingTypeDto {
+public class LoadingTypeCompanyDto {
     private Long id;
+    private Long loadingTypeId;
     private String name;
     private String code;
     private Long companyId;
     private String companyName;
-    private Float factorValue;
+    private Double factorValue;
 }

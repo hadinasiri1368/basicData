@@ -3,8 +3,6 @@ package org.basicData.api;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import org.basicData.common.CommonUtils;
-
-import org.basicData.dto.LoadingTypeDto;
 import org.basicData.model.LoadingType;
 import org.basicData.service.LoadingTypeService;
 import org.springframework.data.domain.Page;
@@ -52,15 +50,4 @@ public class LoadingTypeAPI {
         return loadingTypeService.findAll(LoadingType.class, page, size);
     }
 
-    @GetMapping(path = "/basicData/loadingTypeValue")
-    public LoadingType listLoadingTypeValue(@RequestParam Long code, @RequestParam Long companyId) {
-        return loadingTypeService.findByCompanyAndCode(code, companyId);
-    }
-
-    @GetMapping(path = "/basicData/loadingTypeData")
-    public Page<LoadingTypeDto> listLoadingTypeData(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, HttpServletRequest request) {
-        String uuid = request.getHeader("X-UUID");
-        String token = CommonUtils.getToken(request);
-        return loadingTypeService.findAll(token, uuid, page, size);
-    }
 }
