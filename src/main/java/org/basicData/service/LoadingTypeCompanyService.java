@@ -20,6 +20,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@Transactional
 public class LoadingTypeCompanyService {
     @PersistenceContext
     EntityManager entityManager;
@@ -67,9 +68,8 @@ public class LoadingTypeCompanyService {
     @Transactional
     public int delete(Long id) {
         Query query = entityManager.createQuery("delete from loadingTypeCompany u where u.id=:id");
-        Map<String, Object> param = new HashMap<>();
-        param.put("id", id);
-        return loadingTypeCompanyJPA.executeUpdate(query, param);
+        query.setParameter("id", id);
+        return query.executeUpdate();
     }
 
     public LoadingTypeCompany findOne(Class<LoadingTypeCompany> aClass, Long id) {
@@ -89,43 +89,52 @@ public class LoadingTypeCompanyService {
         return loadingTypeCompanyJPA.findAllWithPaging(aClass, pageRequest);
     }
 
-    public LoadingTypeCompany findByCompanyAndCode(Long loadingTypeId, Long companyId) {
+    public LoadingTypeCompany findByCompanyAndCode(Long loadingTypeId, Long companyId, String uuid, String token) {
         String hql = "select o from loadingTypeCompany o where o.companyId = :companyId and o.loadingType.id = :loadingTypeId";
         Query query = entityManager.createQuery(hql);
         query.setParameter("companyId", companyId);
         query.setParameter("loadingTypeId", loadingTypeId);
-        List<LoadingTypeCompany> resultList = query.getResultList();
-        if (resultList.isEmpty()) {
+        LoadingTypeCompany resultList = (LoadingTypeCompany) query.getResultList().get(0);
+        if (CommonUtils.isNull(resultList)) {
             return null;
         } else {
-            return resultList.get(0);
+            mapLoadingTypeCompanyDto(resultList, uuid, token);
+            return resultList;
         }
     }
 
     public Page<LoadingTypeCompanyDto> findAll(String token, String uuid, Integer page, Integer size) {
-        List<LoadingTypeCompany> loadingTypeCompanyList = new ArrayList<>();
+        List<LoadingTypeCompany> loadingTypeCompanyList;
         loadingTypeCompanyList = findAll(LoadingTypeCompany.class);
-        List<LoadingType> loadingTypeList = loadingTypeService.findAll(LoadingType.class);
-        Page<PersonDto> personDtoPage = transportServiceProxcy.getPerson(token, uuid);
-        List<PersonDto> personDtoList = personDtoPage.getContent();
         List<LoadingTypeCompanyDto> loadingTypeDtos = new ArrayList<>();
         for (LoadingTypeCompany loadingTypeCompany : loadingTypeCompanyList) {
-            Optional<PersonDto> personDto = personDtoList.stream().filter(a -> a.getId().equals(loadingTypeCompany.getCompanyId())).findFirst();
-            Optional<LoadingType> loadingType = loadingTypeList.stream().filter(a->a.getId().equals(loadingTypeCompany.getLoadingType().getId())).findFirst();
-            LoadingTypeCompanyDto loadingTypeCompanyDto = new LoadingTypeCompanyDto();
-            loadingTypeCompanyDto.setId(loadingTypeCompany.getId());
-            loadingTypeCompanyDto.setCode(loadingType.get().getCode());
-            loadingTypeCompanyDto.setName(loadingType.get().getName());
-            loadingTypeCompanyDto.setCompanyId(loadingTypeCompany.getCompanyId());
-            loadingTypeCompanyDto.setCompanyName(personDto.get().getName());
-            loadingTypeCompanyDto.setFactorValue(loadingTypeCompany.getFactorValue());
-            loadingTypeDtos.add(loadingTypeCompanyDto);
+            mapLoadingTypeCompanyDto(loadingTypeCompany, token, uuid);
         }
         if (CommonUtils.isNull(page) && CommonUtils.isNull(size)) {
             return CommonUtils.listPaging(loadingTypeDtos);
         }
         PageRequest pageRequest = PageRequest.of(CommonUtils.isNull(page, this.page), CommonUtils.isNull(size, this.size));
         return CommonUtils.listPaging(loadingTypeDtos, pageRequest);
+    }
+
+    private void mapLoadingTypeCompanyDto(LoadingTypeCompany loadingTypeCompany, String token, String uuid) {
+        List<LoadingType> loadingTypeList = loadingTypeService.findAll(LoadingType.class);
+        Page<PersonDto> personDtoPage = transportServiceProxcy.getPerson(token, uuid);
+        List<PersonDto> personDtoList = personDtoPage.getContent();
+        Optional<PersonDto> personDto = personDtoList.stream()
+                .filter(a -> a.getId().equals(loadingTypeCompany.getCompanyId()))
+                .findFirst();
+        Optional<LoadingType> loadingType = loadingTypeList.stream()
+                .filter(a -> a.getId().equals(loadingTypeCompany.getLoadingType().getId()))
+                .findFirst();
+        LoadingTypeCompanyDto loadingTypeCompanyDto = new LoadingTypeCompanyDto();
+        loadingTypeCompanyDto.setId(loadingTypeCompany.getId());
+        loadingTypeCompanyDto.setCode(loadingType.map(LoadingType::getCode).orElse(null));
+        loadingTypeCompanyDto.setName(loadingType.map(LoadingType::getName).orElse(null));
+        loadingTypeCompanyDto.setCompanyId(loadingTypeCompany.getCompanyId());
+        loadingTypeCompanyDto.setCompanyName(personDto.map(PersonDto::getName).orElse(null));
+        loadingTypeCompanyDto.setFactorValue(loadingTypeCompany.getFactorValue());
+
     }
 
 }

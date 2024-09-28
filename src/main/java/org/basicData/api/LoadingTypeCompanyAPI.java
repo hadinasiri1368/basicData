@@ -50,8 +50,10 @@ public class LoadingTypeCompanyAPI {
     }
 
     @GetMapping(path = "/basicData/loadingTypeCompanyValue")
-    public LoadingTypeCompany listLoadingTypeValue(@RequestParam Long loadingTypeId, @RequestParam Long companyId) {
-        return loadingTypeCompanyService.findByCompanyAndCode(loadingTypeId, companyId);
+    public LoadingTypeCompany listLoadingTypeValue(@RequestParam Long loadingTypeId, @RequestParam Long companyId,HttpServletRequest request) {
+        String uuid = request.getHeader("X-UUID");
+        String token = CommonUtils.getToken(request);
+        return loadingTypeCompanyService.findByCompanyAndCode(loadingTypeId, companyId, uuid , token);
     }
 
     @GetMapping(path = "/basicData/loadingTypeCompanyData")
