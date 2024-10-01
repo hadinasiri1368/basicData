@@ -37,9 +37,10 @@ public class CheckPermission extends OncePerRequestFilter implements Filter {
         } catch (Exception e) {
             log.info("RequestURL:" + request.getRequestURL() + "  UUID=" + uuid + "  ServiceUnauthorized:" + e.getMessage().split("]:")[1]);
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
             response.getWriter().write(convertObjectToJson(ExceptionDto.builder()
-                    .errorMessage(CommonUtils.getMessage("3009"))
-                    .errorCode(3009)
+                    .errorMessage("unauthorized exception")
+                    .errorCode(HttpStatus.UNAUTHORIZED.value())
                     .uuid(request.getHeader("X-UUID"))
                     .errorStatus(HttpStatus.UNAUTHORIZED.value())
                     .build()));
