@@ -17,6 +17,6 @@ public class CarGroupDto {
     private String carTypeName;
     private Long companyId;
     private String companyName;
-    private Float factorValue;
+    private Double factorValue;
 
 }

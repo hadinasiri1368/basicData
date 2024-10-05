@@ -98,7 +98,7 @@ public class LoadingTypeCompanyService {
         if (CommonUtils.isNull(resultList)) {
             return null;
         } else {
-            mapLoadingTypeCompanyDto(resultList, uuid, token);
+            mapLoadingTypeCompanyDto(resultList, token, uuid);
             return resultList;
         }
     }
